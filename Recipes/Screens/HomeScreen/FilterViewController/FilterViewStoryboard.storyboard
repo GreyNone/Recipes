@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Filter View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="FilterViewController" id="Y6W-OH-hqX" customClass="FilterViewController" customModule="Recipes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q7T-dH-3ZM">
+                                <rect key="frame" x="0.0" y="751" width="393" height="67"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BiN-8b-pPq">
+                                        <rect key="frame" x="156.66666666666666" y="16" width="80" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="Cancel">
+                                                    <attributes>
+                                                        <color key="NSColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <font key="NSFont" size="18" name="HelveticaNeue"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="didTapOnCancelButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="2Vd-eq-edv"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="BiN-8b-pPq" firstAttribute="centerY" secondItem="Q7T-dH-3ZM" secondAttribute="centerY" id="CbJ-tf-NB0"/>
+                                    <constraint firstItem="BiN-8b-pPq" firstAttribute="centerX" secondItem="Q7T-dH-3ZM" secondAttribute="centerX" id="u1F-bL-fny"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="q0x-XL-goY">
+                                <rect key="frame" x="0.0" y="59" width="393" height="692"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y6W-OH-hqX" id="TGf-Lj-0Ka"/>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="k6a-dR-K6N"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Q7T-dH-3ZM" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="37l-IF-3ZT"/>
+                            <constraint firstItem="Q7T-dH-3ZM" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="IXU-2M-d0c"/>
+                            <constraint firstItem="Q7T-dH-3ZM" firstAttribute="height" secondItem="5EZ-qb-Rvc" secondAttribute="height" multiplier="0.0786385" id="JmU-Ou-jfd"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Q7T-dH-3ZM" secondAttribute="bottom" id="NHq-pk-nHg"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="q0x-XL-goY" secondAttribute="trailing" id="P9F-vS-4E7"/>
+                            <constraint firstItem="q0x-XL-goY" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="a83-1U-oms"/>
+                            <constraint firstItem="Q7T-dH-3ZM" firstAttribute="top" secondItem="q0x-XL-goY" secondAttribute="bottom" id="szW-RP-IpR"/>
+                            <constraint firstItem="q0x-XL-goY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="xdD-Q7-xaN"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="BiN-8b-pPq" id="Og5-v2-BUr"/>
+                        <outlet property="filterTableView" destination="q0x-XL-goY" id="ic1-3H-H63"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="122.90076335877862" y="-2.1126760563380285"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

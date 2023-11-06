@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Moya
 
 class RecipeCollectionViewCell: UICollectionViewCell {
     
@@ -17,19 +18,20 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     static var nib: UINib {
         return UINib(nibName: "RecipeCollectionViewCell", bundle: nil)
     }
+    var request: Cancellable?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     
-    func setupCollectionViewCell(image: String?, title: String?, readyInMinutes: Int?) {
-        NetworkManager.shared.loadImage(imageString: image) { [weak self] image in
+    func setupCollectionViewCell(data: (image: String?, title: String?, readyInMinutes: Int?)) {
+       request = NetworkManager.shared.loadImage(imageString: data.image) { [weak self] image in
             self?.recipeImageView.image = image
         }
         recipeImageView.layer.cornerRadius = 10
-        titleLabel.text = title
-        readyInMinutesLabel.text?.append("\(readyInMinutes ?? 0)")
+        titleLabel.text = data.title
+        readyInMinutesLabel.text? = "Ready in \(data.readyInMinutes ?? 0) minutes"
     }
     
     @IBAction func didClickOnLikeButton(sender: UIButton) {
@@ -37,7 +39,8 @@ class RecipeCollectionViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        
+        recipeImageView.image = nil
+        request?.cancel()
     }
 
 }

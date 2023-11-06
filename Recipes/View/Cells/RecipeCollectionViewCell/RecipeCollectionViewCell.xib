@@ -16,15 +16,15 @@
                 <rect key="frame" x="0.0" y="0.0" width="295" height="316"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5T0-rt-Sk1">
-                        <rect key="frame" x="0.0" y="0.0" width="295" height="189.66666666666666"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5T0-rt-Sk1">
+                        <rect key="frame" x="0.0" y="0.0" width="295" height="221.33333333333334"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GsO-YX-foi">
-                        <rect key="frame" x="0.0" y="189.66666666666666" width="295" height="63"/>
+                        <rect key="frame" x="0.0" y="221.33333333333334" width="295" height="31.333333333333343"/>
                         <attributedString key="attributedText">
                             <fragment content="Label">
                                 <attributes>
-                                    <color key="NSColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <font key="NSFont" size="19" name="Futura-MediumItalic"/>
                                 </attributes>
                             </fragment>
@@ -73,7 +73,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="5T0-rt-Sk1" secondAttribute="trailing" id="C0e-Eo-NAw"/>
                 <constraint firstAttribute="bottom" secondItem="SLN-Tw-eyf" secondAttribute="bottom" id="QWe-xl-UwB"/>
-                <constraint firstItem="5T0-rt-Sk1" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.6" id="SOi-TP-sTp"/>
+                <constraint firstItem="5T0-rt-Sk1" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.7" id="SOi-TP-sTp"/>
                 <constraint firstItem="SLN-Tw-eyf" firstAttribute="top" secondItem="GsO-YX-foi" secondAttribute="bottom" id="Sm5-Ml-tbo"/>
                 <constraint firstItem="GsO-YX-foi" firstAttribute="top" secondItem="5T0-rt-Sk1" secondAttribute="bottom" id="ei5-NZ-kSI"/>
                 <constraint firstAttribute="trailing" secondItem="GsO-YX-foi" secondAttribute="trailing" id="fmp-vs-mO3"/>

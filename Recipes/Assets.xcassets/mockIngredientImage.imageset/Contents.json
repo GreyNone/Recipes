@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "mockFoodImage.jpeg",
+      "filename" : "mockIngredientImage.jpeg",
       "idiom" : "universal",
       "scale" : "1x"
     },

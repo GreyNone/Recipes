@@ -11,6 +11,7 @@ import Moya
 enum MoyaService {
     case recipes
     case image(String)
+    case ingredientImage(String)
 }
 
 extension MoyaService: TargetType {
@@ -20,6 +21,8 @@ extension MoyaService: TargetType {
             return URL(string: "https://api.spoonacular.com")!
         case .image(let image):
             return URL(string: image)!
+        case .ingredientImage(_):
+            return URL(string: "https://spoonacular.com/cdn/ingredients_100x100/")!
         }
     }
     var path: String {
@@ -28,6 +31,8 @@ extension MoyaService: TargetType {
             return "/recipes/random"
         case .image(_):
             return ""
+        case .ingredientImage(let image):
+            return image
         }
     }
     var headers: [String : String]? {
@@ -35,15 +40,15 @@ extension MoyaService: TargetType {
     }
     var method: Moya.Method {
         switch self {
-        case .recipes, .image(_):
+        case .recipes, .image(_), .ingredientImage(_):
             return .get
         }
     }
     var task: Task {
         switch self {
         case .recipes:
-            return .requestParameters(parameters: ["number" : "3"], encoding: URLEncoding.queryString)
-        case .image(_):
+            return .requestParameters(parameters: ["number" : "10"], encoding: URLEncoding.default)
+        case .image(_), .ingredientImage(_):
             return .requestPlain
         }
     }

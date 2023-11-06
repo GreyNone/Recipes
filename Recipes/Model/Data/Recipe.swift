@@ -22,14 +22,18 @@ struct Recipe: Decodable {
     var veryHealthy: Bool?
     var veryPopular: Bool?
     var pricePerServing: Float?
-    var extendedIngridients: [Ingridient]?
+    var cookingMinutes: Int?
+    var aggregateLikes: Int?
+    var healthScore: Int?
+    var extendedIngredients: [Ingredient]?
     var id: Int?
     var title: String?
     var readyInMinutes: Int?
     var image: String?
     var summary: String?
     var instructions: String?
-    var analyzedInstructions: AnalyzedInstruction?
+    var analyzedInstructions: [AnalyzedInstruction]?
+    var filterCases = [FilterCases]()
     
     enum CodingKeys: String, CodingKey {
         case vegetarian
@@ -38,7 +42,10 @@ struct Recipe: Decodable {
         case veryHealthy
         case veryPopular
         case pricePerServing
-        case extendedIngridients
+        case cookingMinutes
+        case aggregateLikes
+        case healthScore
+        case extendedIngredients
         case id
         case title
         case readyInMinutes
@@ -47,12 +54,30 @@ struct Recipe: Decodable {
         case instructions
         case analyzedInstructions
     }
-
+    
+    mutating func appendFilterCases() {
+            if let isVegetarian = self.vegetarian, isVegetarian {
+                self.filterCases.append(.vegetarian)
+            }
+            if let isVegan = self.vegan, isVegan {
+                self.filterCases.append(.vegan)
+            }
+            if let isCheap = self.cheap, isCheap {
+                self.filterCases.append(.cheap)
+            }
+            if let isVeryHealthy = self.veryHealthy, isVeryHealthy {
+                self.filterCases.append(.veryHealthy)
+            }
+            if let isVeryPopular = self.veryPopular, isVeryPopular {
+                self.filterCases.append(.veryPopular)
+            }
+        }
 }
 
-struct Ingridient: Decodable {
+struct Ingredient: Decodable {
     var id: Int?
     var name: String?
+    var image: String?
     var consistency: String?
     var amount: Float?
     var unit: String?
@@ -60,6 +85,7 @@ struct Ingridient: Decodable {
     enum CodingKeys: String, CodingKey {
         case id
         case name
+        case image
         case consistency
         case amount
         case unit
