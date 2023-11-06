@@ -9,54 +9,50 @@ import Foundation
 import UIKit
 
 final class HomeViewModel {
-    weak var delegate: RequestDelegate?
-    private var state: ViewState {
-        didSet {
-            delegate?.didUpdate(with: state)
-        }
-    }
-    var allRecipes = [Recipe]()
-//    var allRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe,MockData.mockRecipe,MockData.mockRecipe]
+    weak var delegate: HomeViewModelDelegate?
+//    var allRecipes = [Recipe]()
+    var allRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe,MockData.mockRecipe,MockData.mockRecipe]
     var filteredRecipes = [Recipe]()
     
-    init() {
-        self.state = .idle
-    }
 }
 
 //MARK: - Network
 extension HomeViewModel {
     func loadData() {
-        state = .loading
-        NetworkManager.shared.loadRecipes { [weak self] (recipes, viewState) in
-            guard let self = self else { return }
-            if let recipes = recipes {
-                for var recipe in recipes {
-                    recipe.appendFilterCases()
-                    self.allRecipes.append(recipe)
-                }
-                self.filteredRecipes = allRecipes
-                self.state = viewState
-            } else {
-                self.state = viewState
-            }
-            
-        }
-//        self.filteredRecipes = self.allRecipes
-//        self.state = .success(nil)
+//        delegate?.startActivityIndicator()
+//        NetworkManager.shared.loadRecipes { [weak self] (recipes) in
+//            guard let self = self else { return }
+//            if let recipes = recipes {
+//                for var recipe in recipes {
+//                    recipe.appendFilterCases()
+//                    self.allRecipes.append(recipe)
+//                }
+//                self.filteredRecipes = allRecipes
+//                delegate?.stopActivityIndicator()
+//                self.delegate?.updateCollectionView()
+//            } else {
+//                delegate?.presentEmptyStatusView()
+//            }
+//        }
+        
+        delegate?.startActivityIndicator()
+        self.filteredRecipes = self.allRecipes
+        delegate?.stopActivityIndicator()
+        delegate?.updateCollectionView()
     }
     
     func loadIfNeeded(for indexPath: IndexPath) {
-        let currentItem = indexPath.row
-        if currentItem >= allRecipes.count - 2 {
-            loadData()
-        }
+//        let currentItem = indexPath.row
+//        if currentItem >= allRecipes.count - 2 {
+//            loadData()
+//        }
     }
 }
 
 //MARK: - EmptyStatusView
 extension HomeViewModel {
     func didTapOnButton() {
+        delegate?.dismissEmptyStatusView()
         self.loadData()
     }
 }
@@ -77,8 +73,6 @@ extension HomeViewModel {
     }
     
     func filterData() {
-        self.state = .loading
-        
         filteredRecipes = []
         let checkedFilters = FilterData.allData.filter { filter in
             filter.isChecked
@@ -91,13 +85,13 @@ extension HomeViewModel {
         
         if checkedFilters.isEmpty {
             filteredRecipes = allRecipes
-            self.state = .success(nil)
+            delegate?.updateCollectionView()
             return
         }
         
         filteredRecipes = allRecipes.filter({ $0.filterCases.contains(checkedFilterCases) })
     
-        self.state = .success(nil)
+        delegate?.updateCollectionView()
     }
 }
 

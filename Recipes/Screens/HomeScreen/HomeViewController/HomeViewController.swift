@@ -61,6 +61,63 @@ class HomeViewController: UIViewController {
     }
 }
 
+//MARK: - HomeViewModelDelegate
+extension HomeViewController: HomeViewModelDelegate {
+    
+    func updateCollectionView() {
+        recipesCollectionView.reloadData()
+    }
+    
+    func startActivityIndicator() {
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
+    }
+    
+    func presentEmptyStatusView() {
+        emptyStatusView = EmptyStatusView()
+        if let emptyStatusView = emptyStatusView {
+            view.addSubview(emptyStatusView)
+            emptyStatusView.delegate = self
+            addConsraintsToEmptyStatusView()
+        }
+    }
+    
+    func dismissEmptyStatusView() {
+        emptyStatusView?.removeFromSuperview()
+        emptyStatusView = nil
+    }
+}
+
+//MARK: - EmptyStatusView
+extension HomeViewController: EmptyStatusViewProtocol {
+    
+    private func addConsraintsToEmptyStatusView() {
+        if let emptyStatusView = emptyStatusView {
+            emptyStatusView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                emptyStatusView.containerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+                emptyStatusView.containerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+                emptyStatusView.containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+                emptyStatusView.containerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+            ])
+        }
+    }
+    
+    func didTapOnButton() {
+        homeViewModel?.didTapOnButton()
+    }
+}
+
+//MARK: - FilterDataProtocol
+extension HomeViewController: FilterDataDelegate {
+    func perfomUpdates() {
+        homeViewModel?.filterData()
+    }
+}
+
 //MARK: - UICollectionViewDataSource
 extension HomeViewController: UICollectionViewDataSource {
     
@@ -119,54 +176,3 @@ extension HomeViewController: UICollectionViewDelegate {
     }
 }
 
-//MARK: - RequestDelegate
-extension HomeViewController: RequestDelegate {
-    func didUpdate(with state: ViewState) {
-        switch state {
-        case .idle:
-            break
-        case .loading:
-            activityIndicator.startAnimating()
-        case .success:
-            activityIndicator.stopAnimating()
-            
-            self.recipesCollectionView.reloadData()
-        case .error:
-            activityIndicator.stopAnimating()
-            
-            emptyStatusView = EmptyStatusView()
-            if let emptyStatusView = emptyStatusView {
-                emptyStatusView.delegate = self
-                self.view.addSubview(emptyStatusView)
-                addConsraintsToEmptyStatusView()
-            }
-        }
-    }
-}
-
-//MARK: - EmptyStatusView
-extension HomeViewController: EmptyStatusViewProtocol {
-    
-    private func addConsraintsToEmptyStatusView() {
-        if let emptyStatusView = emptyStatusView {
-            emptyStatusView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                emptyStatusView.containerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-                emptyStatusView.containerView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-                emptyStatusView.containerView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
-                emptyStatusView.containerView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-            ])
-        }
-    }
-    
-    func didTapOnButton() {
-        homeViewModel?.didTapOnButton()
-    }
-}
-
-//MARK: - FilterDataProtocol
-extension HomeViewController: FilterDataDelegate {
-    func perfomUpdates() {
-        homeViewModel?.filterData()
-    }
-}

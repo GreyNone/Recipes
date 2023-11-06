@@ -13,18 +13,18 @@ final class NetworkManager {
     static let shared = NetworkManager()
     private let moyaProvider = MoyaProvider<MoyaService>()
     
-    func loadRecipes(completion: @escaping (([Recipe]?,ViewState)) -> Void) {
+    func loadRecipes(completion: @escaping ([Recipe]?) -> Void) {
         moyaProvider.request(.recipes) { result in
             switch result {
             case .success(let response):
                 do {
                     let fetchedRecipes = try response.map(Recipes.self)
-                    completion((fetchedRecipes.recipes,.success(nil)))
+                    completion(fetchedRecipes.recipes)
                 } catch {
                     print(error)
                 }
             case .failure(_):
-                completion((nil,.error))
+                completion(nil)
             }
         }
     }

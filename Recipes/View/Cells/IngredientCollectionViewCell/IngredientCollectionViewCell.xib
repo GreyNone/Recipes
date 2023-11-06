@@ -17,14 +17,15 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5E1-Cc-Usb">
-                        <rect key="frame" x="0.0" y="0.0" width="251" height="195.33333333333334"/>
+                        <rect key="frame" x="0.0" y="0.0" width="251" height="197.66666666666666"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="g3g-Fq-sZQ">
-                        <rect key="frame" x="5" y="200.33333333333334" width="241" height="23.666666666666657"/>
+                        <rect key="frame" x="5" y="202.66666666666666" width="241" height="21.333333333333343"/>
                         <attributedString key="attributedText">
                             <fragment content="Label">
                                 <attributes>
-                                    <font key="NSFont" size="21" name="ArialMT"/>
+                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <font key="NSFont" size="19" name="ArialMT"/>
                                 </attributes>
                             </fragment>
                         </attributedString>

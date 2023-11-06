@@ -18,6 +18,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var titleContainerView: UIView!
     @IBOutlet weak var itemsContainerView: UIView!
     @IBOutlet weak var ingredientsCollectionView: UICollectionView!
+    @IBOutlet weak var instructionsTableView: UITableView!
     var detailViewModel: DetailViewModel!
     
     static func makeDetailViewController(recipe: Recipe?) -> DetailViewController {
@@ -45,16 +46,13 @@ class DetailViewController: UIViewController {
     
     private func setup() {
         self.detailViewModel.delegate = self
-        detailViewModel.loadImage()
+        detailViewModel.setupUI()
         
         addShadows(to: titleContainerView)
         titleContainerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 
         addShadows(to: itemsContainerView)
         itemsContainerView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        
-        summaryLabel.text = detailViewModel.recipe.summary
-        titleLabel.text = detailViewModel.recipe.title
         
         likeItemVIew.configure(title: "\(detailViewModel.recipe.aggregateLikes ?? 0)",
                                image: UIImage(systemName: "hand.thumbsup")!,
@@ -75,6 +73,21 @@ class DetailViewController: UIViewController {
         view.layer.shadowOpacity = 0.8
         view.layer.shadowOffset = .zero
         view.layer.shadowRadius = 5
+    }
+}
+
+extension DetailViewController: DetailViewModelDelegate {
+    
+    func setImage(image: UIImage) {
+        imageView.image = image
+    }
+    
+    func setTitle(text: String) {
+        titleLabel.text = text
+    }
+    
+    func setSummaryText(text: NSAttributedString) {
+        summaryLabel.attributedText = text
     }
 }
 
@@ -120,17 +133,17 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension DetailViewController: RequestDelegate {
-    func didUpdate(with state: ViewState) {
-        switch state {
-        case .idle:
-            break
-        case .loading:
-            break
-        case .success(let image):
-            self.imageView.image = image
-        case .error:
-            break
-        }
+extension DetailViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+}
+
+extension DetailViewController: UITableViewDelegate {
+    
 }

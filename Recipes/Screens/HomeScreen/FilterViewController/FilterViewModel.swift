@@ -9,16 +9,6 @@ import Foundation
 
 final class FilterViewModel {
     
-    weak var delegate: RequestDelegate?
-    private var state: ViewState {
-        didSet {
-            delegate?.didUpdate(with: state)
-        }
-    }
-    
-    init() {
-        self.state = .idle
-    }
 }
 
 extension FilterViewModel {
