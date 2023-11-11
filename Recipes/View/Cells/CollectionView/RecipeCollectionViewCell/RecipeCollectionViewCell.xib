@@ -17,10 +17,10 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5T0-rt-Sk1">
-                        <rect key="frame" x="0.0" y="0.0" width="295" height="221.33333333333334"/>
+                        <rect key="frame" x="0.0" y="0.0" width="295" height="189.66666666666666"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="GsO-YX-foi">
-                        <rect key="frame" x="0.0" y="221.33333333333334" width="295" height="31.333333333333343"/>
+                        <rect key="frame" x="0.0" y="189.66666666666666" width="295" height="63"/>
                         <attributedString key="attributedText">
                             <fragment content="Label">
                                 <attributes>
@@ -46,7 +46,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ccR-Aw-F0f">
-                                <rect key="frame" x="244.33333333333334" y="20.333333333333343" width="50.666666666666657" height="43"/>
+                                <rect key="frame" x="244.33333333333334" y="20.333333333333343" width="50.666666666666657" height="33"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system">
                                     <color key="baseForegroundColor" name="mainColor"/>
@@ -59,7 +59,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Na-5P-Qxz" firstAttribute="leading" secondItem="SLN-Tw-eyf" secondAttribute="leading" id="BU9-dH-JwD"/>
-                            <constraint firstAttribute="bottom" secondItem="ccR-Aw-F0f" secondAttribute="bottom" id="OF1-DN-q0G"/>
+                            <constraint firstAttribute="bottom" secondItem="ccR-Aw-F0f" secondAttribute="bottom" constant="10" id="OF1-DN-q0G"/>
                             <constraint firstAttribute="trailing" secondItem="ccR-Aw-F0f" secondAttribute="trailing" id="PVj-JW-62U"/>
                             <constraint firstItem="6Na-5P-Qxz" firstAttribute="height" secondItem="SLN-Tw-eyf" secondAttribute="height" multiplier="0.321053" id="Plz-cz-Bzz"/>
                             <constraint firstItem="6Na-5P-Qxz" firstAttribute="top" secondItem="SLN-Tw-eyf" secondAttribute="top" id="Qvy-f6-tFf"/>
@@ -73,7 +73,7 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="5T0-rt-Sk1" secondAttribute="trailing" id="C0e-Eo-NAw"/>
                 <constraint firstAttribute="bottom" secondItem="SLN-Tw-eyf" secondAttribute="bottom" id="QWe-xl-UwB"/>
-                <constraint firstItem="5T0-rt-Sk1" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.7" id="SOi-TP-sTp"/>
+                <constraint firstItem="5T0-rt-Sk1" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="0.6" id="SOi-TP-sTp"/>
                 <constraint firstItem="SLN-Tw-eyf" firstAttribute="top" secondItem="GsO-YX-foi" secondAttribute="bottom" id="Sm5-Ml-tbo"/>
                 <constraint firstItem="GsO-YX-foi" firstAttribute="top" secondItem="5T0-rt-Sk1" secondAttribute="bottom" id="ei5-NZ-kSI"/>
                 <constraint firstAttribute="trailing" secondItem="GsO-YX-foi" secondAttribute="trailing" id="fmp-vs-mO3"/>

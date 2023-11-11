@@ -53,5 +53,9 @@ struct MockData {
     static let secondStep = Step(number: 2,
                                  step: "Whisk the egg whites until soft peaks form.Fold the egg whites gently into the egg yolks cream.Gently stir in almonds and cocoa.Lightly butter and flour a 20 round cake pan, line with parchment paper.",
                                  length: nil)
-    static let steps = [firstStep, secondStep]
+    
+    static let thirdStep =  Step(number: 3,
+                                 step: "Whisk the egg whites until soft peaks form.Fold the egg whites gently into the egg yolks cream.Gently stir in almonds and cocoa.Lightly butter and flour a 20 round cake pan, line with parchment paper.",
+                                 length: nil)
+    static let steps = [firstStep, secondStep, thirdStep]
 }

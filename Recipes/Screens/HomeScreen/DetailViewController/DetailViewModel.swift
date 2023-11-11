@@ -11,6 +11,7 @@ final class DetailViewModel {
     
     weak var delegate: DetailViewModelDelegate?
     var recipe: Recipe
+    var selectedIndexPath: IndexPath?
     
     init(recipe: Recipe) {
         self.recipe = recipe
@@ -43,7 +44,6 @@ extension DetailViewModel {
 
 //MARK: - Network
 extension DetailViewModel {
-    
     private func loadImage() {
         _ = NetworkManager.shared.loadImage(imageString: recipe.image) { [weak self] image in
             if let image = image {
@@ -69,24 +69,30 @@ extension DetailViewModel {
     }
 }
 
-//MARK: - CollectionViewLayout
-extension DetailViewModel {
-    var insets: UIEdgeInsets {
-        UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
-    }
-    var minimumLineSpacingForSection: CGFloat {
-        10
-    }
-    var minimumInteritemSpacingForSection: CGFloat {
-        10
-    }
-    var itemSize: CGSize {
-        CGSize(width: 150, height: 200)
-    }
-    
-}
-
 //MARK: - UITableViewDataSource
 extension DetailViewModel {
+    var numberOfSections: Int? {
+        recipe.analyzedInstructions?.count
+    }
     
+    func numberOfItems(for section: Int) -> Int? {
+        return (recipe.analyzedInstructions?[section].steps?.count ?? 0) + (selectedIndexPath != nil ? 1 : 0)
+    }
+    
+    func title(for section: Int) -> String? {
+        recipe.analyzedInstructions?[section].name
+    }
+    
+    func getStepNumber(for indexPath: IndexPath) -> String? {
+        "Step \(recipe.analyzedInstructions?[indexPath.section].steps?[indexPath.row].number ?? 0)"
+    }
+    
+    func getStepInfo(for indexPath: IndexPath) -> (length: String, description: String)? {
+        if let selectedIndexPath = selectedIndexPath {
+            let step = recipe.analyzedInstructions?[selectedIndexPath.section].steps?[selectedIndexPath.row]
+            let length = "\(step?.length?.number ?? 0) " + (step?.length?.unit ?? "minutes")
+            return (length, step?.step ?? "")
+        }
+        return nil
+    }
 }

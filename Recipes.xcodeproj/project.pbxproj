@@ -53,6 +53,10 @@
 		97E95DD22AF7E09100AF0E2D /* EmptyStatusViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E95DD12AF7E09100AF0E2D /* EmptyStatusViewProtocol.swift */; };
 		97E95DD42AF8D70D00AF0E2D /* HomeViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E95DD32AF8D70D00AF0E2D /* HomeViewModelDelegate.swift */; };
 		97E95DD62AF8DC8800AF0E2D /* DetailViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E95DD52AF8DC8800AF0E2D /* DetailViewModelDelegate.swift */; };
+		97E95DDA2AFB890700AF0E2D /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97E95DD82AFB890700AF0E2D /* InstructionTableViewCell.swift */; };
+		97E95DDB2AFB890700AF0E2D /* InstructionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97E95DD92AFB890700AF0E2D /* InstructionTableViewCell.xib */; };
+		97EFA8DC2AFD4BB90000669D /* StepTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97EFA8DA2AFD4BB90000669D /* StepTableViewCell.swift */; };
+		97EFA8DD2AFD4BB90000669D /* StepTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 97EFA8DB2AFD4BB90000669D /* StepTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -100,6 +104,10 @@
 		97E95DD12AF7E09100AF0E2D /* EmptyStatusViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStatusViewProtocol.swift; sourceTree = "<group>"; };
 		97E95DD32AF8D70D00AF0E2D /* HomeViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelDelegate.swift; sourceTree = "<group>"; };
 		97E95DD52AF8DC8800AF0E2D /* DetailViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModelDelegate.swift; sourceTree = "<group>"; };
+		97E95DD82AFB890700AF0E2D /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
+		97E95DD92AFB890700AF0E2D /* InstructionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InstructionTableViewCell.xib; sourceTree = "<group>"; };
+		97EFA8DA2AFD4BB90000669D /* StepTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTableViewCell.swift; sourceTree = "<group>"; };
+		97EFA8DB2AFD4BB90000669D /* StepTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StepTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,11 +352,47 @@
 		97B914CA2AE1A5C30075B828 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				97EFA8DF2AFD4BEB0000669D /* CollectionView */,
+				97EFA8DE2AFD4BE30000669D /* TableView */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		97E95DD72AFB88C000AF0E2D /* InstructionTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				97E95DD82AFB890700AF0E2D /* InstructionTableViewCell.swift */,
+				97E95DD92AFB890700AF0E2D /* InstructionTableViewCell.xib */,
+			);
+			path = InstructionTableViewCell;
+			sourceTree = "<group>";
+		};
+		97EFA8D92AFD4B8B0000669D /* StepTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				97EFA8DA2AFD4BB90000669D /* StepTableViewCell.swift */,
+				97EFA8DB2AFD4BB90000669D /* StepTableViewCell.xib */,
+			);
+			path = StepTableViewCell;
+			sourceTree = "<group>";
+		};
+		97EFA8DE2AFD4BE30000669D /* TableView */ = {
+			isa = PBXGroup;
+			children = (
 				970F3CF12AE9178300997707 /* FilterTableViewCell */,
+				97EFA8D92AFD4B8B0000669D /* StepTableViewCell */,
+				97E95DD72AFB88C000AF0E2D /* InstructionTableViewCell */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		97EFA8DF2AFD4BEB0000669D /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
 				970F3CDC2AE67CED00997707 /* RecipeCollectionViewCell */,
 				970F3D042AF23DD100997707 /* IngredientCollectionViewCell */,
 			);
-			path = Cells;
+			path = CollectionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -419,6 +463,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				970F3CF82AEAB34500997707 /* FilterViewStoryboard.storyboard in Resources */,
+				97EFA8DD2AFD4BB90000669D /* StepTableViewCell.xib in Resources */,
 				974C38232AE065FF0084F1D1 /* LaunchScreen.storyboard in Resources */,
 				97B914C92AE1A5BE0075B828 /* RecipeCollectionViewCell.xib in Resources */,
 				970F3D032AEFB6BC00997707 /* ItemView.xib in Resources */,
@@ -428,6 +473,7 @@
 				970F3CE52AE902E400997707 /* DetailViewControllerStoryboard.storyboard in Resources */,
 				974C381B2AE065FC0084F1D1 /* Main.storyboard in Resources */,
 				974C38362AE067100084F1D1 /* HomeViewControllerStoryboard.storyboard in Resources */,
+				97E95DDB2AFB890700AF0E2D /* InstructionTableViewCell.xib in Resources */,
 				974C383C2AE067DF0084F1D1 /* FavouritesViewControllerStoryboard.storyboard in Resources */,
 				974C38422AE155410084F1D1 /* NewRecipeViewControllerStoryboard.storyboard in Resources */,
 				970F3D0D2AF413BE00997707 /* EmptyStatusView.xib in Resources */,
@@ -447,6 +493,7 @@
 				974C38382AE067220084F1D1 /* FavouritesViewController.swift in Sources */,
 				97E95DD42AF8D70D00AF0E2D /* HomeViewModelDelegate.swift in Sources */,
 				970F3D072AF23E1200997707 /* IngredientCollectionViewCell.swift in Sources */,
+				97E95DDA2AFB890700AF0E2D /* InstructionTableViewCell.swift in Sources */,
 				97E95DD22AF7E09100AF0E2D /* EmptyStatusViewProtocol.swift in Sources */,
 				970F3CD92AE66C2500997707 /* HomeViewModel.swift in Sources */,
 				974C38402AE1552A0084F1D1 /* NewRecipeViewController.swift in Sources */,
@@ -463,6 +510,7 @@
 				974C383E2AE06E7D0084F1D1 /* CustomTabBar.swift in Sources */,
 				974C38182AE065FC0084F1D1 /* MainTabBarController.swift in Sources */,
 				974C38142AE065FC0084F1D1 /* AppDelegate.swift in Sources */,
+				97EFA8DC2AFD4BB90000669D /* StepTableViewCell.swift in Sources */,
 				970F3CFE2AEAD23500997707 /* FilterDataDelegate.swift in Sources */,
 				97B914C52AE1776E0075B828 /* CustomButton.swift in Sources */,
 				974C38452AE16A230084F1D1 /* Recipe.swift in Sources */,
@@ -626,8 +674,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -653,8 +701,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

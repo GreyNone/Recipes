@@ -93,9 +93,11 @@ struct Ingredient: Decodable {
 }
 
 struct AnalyzedInstruction: Decodable {
+    var name: String?
     var steps: [Step]?
     
     enum CodingKeys: String, CodingKey {
+        case name
         case steps
     }
 }

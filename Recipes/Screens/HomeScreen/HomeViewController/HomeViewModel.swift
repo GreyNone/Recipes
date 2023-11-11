@@ -94,32 +94,3 @@ extension HomeViewModel {
         delegate?.updateCollectionView()
     }
 }
-
-//MARK: - CollectionViewLayout
-extension HomeViewModel {
-    private var columns: CGFloat {
-        switch UIDevice.current.userInterfaceIdiom {
-        case .pad:
-            return 3
-        case .phone:
-            return 2
-        default:
-            return 1
-        }
-    }
-    var insets: UIEdgeInsets {
-        UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
-    }
-    var minimumLineSpacingForSection: CGFloat {
-        10
-    }
-    var minimumInteritemSpacingForSection: CGFloat {
-        10
-    }
-    
-    func calculateItemWidth(collectionWidth: CGFloat) -> CGSize {
-        let totalSpace = insets.left + insets.right + (minimumInteritemSpacingForSection * CGFloat(columns - 1))
-        let size = Int((collectionWidth - totalSpace) / CGFloat(columns))
-        return CGSize(width: size, height: 300)
-    }
-}

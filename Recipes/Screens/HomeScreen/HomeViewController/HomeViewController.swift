@@ -42,10 +42,14 @@ class HomeViewController: UIViewController {
     private func setup() {
         self.homeViewModel = HomeViewModel()
         self.homeViewModel?.delegate = self
+        
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem?.tintColor = UIColor(named: "mainColor")
+        
         recipesCollectionView.register(RecipeCollectionViewCell.nib, forCellWithReuseIdentifier: RecipeCollectionViewCell.identifier)
+        configureHierarchy()
+        
         self.homeViewModel?.loadData()
     }
     
@@ -139,28 +143,51 @@ extension HomeViewController: UICollectionViewDataSource {
     }
 }
 
-//MARK: - UICollectionViewDelegateFlowLayout
-extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        homeViewModel?.calculateItemWidth(collectionWidth: self.recipesCollectionView.frame.width) ?? CGSize(width: 200, height: 300)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return homeViewModel?.insets ?? UIEdgeInsets(top: 20, left: 10, bottom: 20, right: 10)
+//MARK: - UICollectionViewCompositionalLayout
+extension HomeViewController {
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout {
+            (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            let count = 2
+            let interGroupSpacing = 10.0
+            let contentInsets = NSDirectionalEdgeInsets(top: 5.0, leading: 5.0, bottom: 5.0, trailing: 5.0)
+            
+            let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                                                        heightDimension: .fractionalHeight(1.0)))
+            leadingItem.contentInsets = contentInsets
+            
+            let trailingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                                                         heightDimension: .fractionalHeight(0.5)))
+            trailingItem.contentInsets = contentInsets
+            
+            let trailingGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                                                                    heightDimension: .fractionalHeight(1.0)),
+                                                                 repeatingSubitem: trailingItem,
+                                                                 count: count)
+            
+            let topNestedGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                                                                       heightDimension: .fractionalHeight(0.6)),
+                                                                    subitems: [leadingItem, trailingGroup])
+            
+            let bottomItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                                                       heightDimension: .fractionalHeight(0.4)))
+            bottomItem.contentInsets = contentInsets
+
+            let nestedGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                                                                  heightDimension: .fractionalHeight(1.0)),
+                                                               subitems: [topNestedGroup, bottomItem])
+            
+            let section = NSCollectionLayoutSection(group: nestedGroup)
+            section.interGroupSpacing = interGroupSpacing
+            return section
+        }
+        return layout
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return homeViewModel?.minimumLineSpacingForSection ?? 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return homeViewModel?.minimumInteritemSpacingForSection ?? 10
+    private func configureHierarchy() {
+        recipesCollectionView.collectionViewLayout = createLayout()
+        
     }
 }
 

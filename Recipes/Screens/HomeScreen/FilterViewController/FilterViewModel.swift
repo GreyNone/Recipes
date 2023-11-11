@@ -9,9 +9,6 @@ import Foundation
 
 final class FilterViewModel {
     
-}
-
-extension FilterViewModel {
     var numberOfItems: Int {
         FilterData.allData.count
     }

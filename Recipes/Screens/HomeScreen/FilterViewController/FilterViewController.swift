@@ -14,6 +14,7 @@ class FilterViewController: UIViewController {
     private var filterViewModel = FilterViewModel()
     weak var delegate: FilterDataDelegate?
     
+    //MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         filterTableView.register(FilterTableViewCell.nib, forCellReuseIdentifier: FilterTableViewCell.identifier)
@@ -24,6 +25,7 @@ class FilterViewController: UIViewController {
     }
 }
 
+//MARK: - UITableViewDataSource
 extension FilterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filterViewModel.numberOfItems
@@ -37,6 +39,7 @@ extension FilterViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
 extension FilterViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

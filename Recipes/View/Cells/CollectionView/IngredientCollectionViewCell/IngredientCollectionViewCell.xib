@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -31,12 +31,13 @@
                         </attributedString>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="250-B4-bdY">
-                        <rect key="frame" x="204.33333333333334" y="229" width="41.666666666666657" height="19"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="250-B4-bdY">
+                        <rect key="frame" x="5" y="229" width="241" height="19"/>
                         <attributedString key="attributedText">
                             <fragment content="Label">
                                 <attributes>
                                     <font key="NSFont" size="17" name="Arial-ItalicMT"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                 </attributes>
                             </fragment>
                         </attributedString>
@@ -50,6 +51,7 @@
                 <constraint firstItem="250-B4-bdY" firstAttribute="top" secondItem="g3g-Fq-sZQ" secondAttribute="bottom" constant="5" id="41b-Qf-tHG"/>
                 <constraint firstItem="g3g-Fq-sZQ" firstAttribute="top" secondItem="5E1-Cc-Usb" secondAttribute="bottom" constant="5" id="MEl-MK-Jdt"/>
                 <constraint firstAttribute="bottom" secondItem="250-B4-bdY" secondAttribute="bottom" constant="5" id="bGj-yM-aLk"/>
+                <constraint firstItem="250-B4-bdY" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="dE0-aG-pzJ"/>
                 <constraint firstAttribute="trailing" secondItem="g3g-Fq-sZQ" secondAttribute="trailing" constant="5" id="ekD-Di-Ogc"/>
                 <constraint firstItem="g3g-Fq-sZQ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="gv7-j5-puV"/>
                 <constraint firstAttribute="trailing" secondItem="250-B4-bdY" secondAttribute="trailing" constant="5" id="j0s-6U-dml"/>
