@@ -3,7 +3,9 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,25 +18,102 @@
                 <rect key="frame" x="0.0" y="0.0" width="540" height="234"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Whb-ht-NUh">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="8IS-z6-W6l" userLabel="ContainerStackView">
                         <rect key="frame" x="0.0" y="0.0" width="540" height="234"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="74b-gX-q5d" userLabel="MainStackView">
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="95.666666666666671"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fork.knife.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="41W-MG-vVn">
+                                        <rect key="frame" x="0.0" y="1" width="40" height="94.333333333333343"/>
+                                        <color key="tintColor" systemColor="systemTealColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="tTT-2Y-7tD"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ij-dF-HDj">
+                                        <rect key="frame" x="40" y="0.0" width="450" height="95.666666666666671"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Label">
+                                                <attributes>
+                                                    <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <font key="NSFont" size="22" name="Arial-ItalicMT"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="55D-Sf-OCZ">
+                                        <rect key="frame" x="490" y="0.0" width="50" height="95.666666666666671"/>
+                                        <color key="tintColor" name="mainColor"/>
+                                    </imageView>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Izn-UL-Ng8" userLabel="expandableView">
+                                <rect key="frame" x="0.0" y="95.666666666666671" width="540" height="138.33333333333331"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czp-xW-x6D">
+                                        <rect key="frame" x="0.0" y="0.0" width="540" height="138.33333333333334"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Label">
+                                                <attributes>
+                                                    <font key="NSFont" size="20" name="ArialMT"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="czp-xW-x6D" secondAttribute="bottom" id="16l-Ru-Hja"/>
+                                    <constraint firstItem="czp-xW-x6D" firstAttribute="top" secondItem="Izn-UL-Ng8" secondAttribute="top" id="M91-wI-nNi"/>
+                                    <constraint firstAttribute="trailing" secondItem="czp-xW-x6D" secondAttribute="trailing" id="Nhh-7r-DmQ"/>
+                                    <constraint firstItem="czp-xW-x6D" firstAttribute="leading" secondItem="Izn-UL-Ng8" secondAttribute="leading" id="pxx-3x-Zwu"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Izn-UL-Ng8" firstAttribute="leading" secondItem="8IS-z6-W6l" secondAttribute="leading" id="AH4-Iw-Awf"/>
+                            <constraint firstItem="Izn-UL-Ng8" firstAttribute="top" secondItem="74b-gX-q5d" secondAttribute="bottom" id="M3d-0e-z73"/>
+                            <constraint firstAttribute="bottom" secondItem="Izn-UL-Ng8" secondAttribute="bottom" id="TnT-3q-Jbr"/>
+                            <constraint firstItem="74b-gX-q5d" firstAttribute="top" secondItem="8IS-z6-W6l" secondAttribute="top" id="YH7-Xb-I8W"/>
+                            <constraint firstAttribute="trailing" secondItem="Izn-UL-Ng8" secondAttribute="trailing" id="hJi-dl-nqN"/>
+                            <constraint firstAttribute="trailing" secondItem="74b-gX-q5d" secondAttribute="trailing" id="p0m-00-5LI"/>
+                            <constraint firstItem="74b-gX-q5d" firstAttribute="leading" secondItem="8IS-z6-W6l" secondAttribute="leading" id="qXZ-gr-9sF"/>
+                        </constraints>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="Whb-ht-NUh" secondAttribute="bottom" id="CiD-xb-eNf"/>
-                    <constraint firstAttribute="trailing" secondItem="Whb-ht-NUh" secondAttribute="trailing" id="Era-uo-iEO"/>
-                    <constraint firstItem="Whb-ht-NUh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="G78-YB-MUq"/>
-                    <constraint firstItem="Whb-ht-NUh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="NkB-Ei-e0X"/>
+                    <constraint firstItem="8IS-z6-W6l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="00C-gg-Qft"/>
+                    <constraint firstAttribute="trailing" secondItem="8IS-z6-W6l" secondAttribute="trailing" id="Vkk-RL-5co"/>
+                    <constraint firstItem="8IS-z6-W6l" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="bjH-Vg-1r7"/>
+                    <constraint firstAttribute="bottom" secondItem="8IS-z6-W6l" secondAttribute="bottom" id="qMs-ng-sVe"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="titleLabel" destination="Whb-ht-NUh" id="Ocg-Pa-OEF"/>
+                <outlet property="chevronImageView" destination="55D-Sf-OCZ" id="JQq-TK-u0Y"/>
+                <outlet property="containerStackView" destination="8IS-z6-W6l" id="ISg-zt-0YA"/>
+                <outlet property="descriptionLabel" destination="czp-xW-x6D" id="era-ks-Crb"/>
+                <outlet property="expandableView" destination="Izn-UL-Ng8" id="Vj8-LE-tVB"/>
+                <outlet property="mainStackView" destination="74b-gX-q5d" id="FMB-W2-w0e"/>
+                <outlet property="titleLabel" destination="4ij-dF-HDj" id="hVD-X1-2Ns"/>
             </connections>
-            <point key="canvasLocation" x="306.87022900763355" y="86.619718309859152"/>
+            <point key="canvasLocation" x="306.87022900763355" y="85.91549295774648"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="fork.knife.circle" catalog="system" width="128" height="123"/>
+        <namedColor name="mainColor">
+            <color red="1" green="0.55000001192092896" blue="0.37000000476837158" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemTealColor">
+            <color red="0.18823529411764706" green="0.69019607843137254" blue="0.7803921568627451" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

@@ -11,7 +11,6 @@ final class DetailViewModel {
     
     weak var delegate: DetailViewModelDelegate?
     var recipe: Recipe
-    var selectedIndexPath: IndexPath?
     
     init(recipe: Recipe) {
         self.recipe = recipe
@@ -76,23 +75,11 @@ extension DetailViewModel {
     }
     
     func numberOfItems(for section: Int) -> Int? {
-        return (recipe.analyzedInstructions?[section].steps?.count ?? 0) + (selectedIndexPath != nil ? 1 : 0)
+        return recipe.analyzedInstructions?[section].steps?.count
     }
     
-    func title(for section: Int) -> String? {
-        recipe.analyzedInstructions?[section].name
-    }
-    
-    func getStepNumber(for indexPath: IndexPath) -> String? {
-        "Step \(recipe.analyzedInstructions?[indexPath.section].steps?[indexPath.row].number ?? 0)"
-    }
-    
-    func getStepInfo(for indexPath: IndexPath) -> (length: String, description: String)? {
-        if let selectedIndexPath = selectedIndexPath {
-            let step = recipe.analyzedInstructions?[selectedIndexPath.section].steps?[selectedIndexPath.row]
-            let length = "\(step?.length?.number ?? 0) " + (step?.length?.unit ?? "minutes")
-            return (length, step?.step ?? "")
-        }
-        return nil
+    func getStepInfo(for indexPath: IndexPath) -> (title:String, description: String) {
+        let step = recipe.analyzedInstructions?[indexPath.section].steps?[indexPath.row]
+        return ("Step \(step?.number ?? 0)", step?.step ?? "")
     }
 }

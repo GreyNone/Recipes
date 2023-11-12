@@ -66,9 +66,6 @@ class DetailViewController: UIViewController {
         configureHierarchy()
         
         instructionsTableView.register(InstructionTableViewCell.nib, forCellReuseIdentifier: InstructionTableViewCell.identifier)
-        instructionsTableView.register(StepTableViewCell.nib, forCellReuseIdentifier: StepTableViewCell.identifier)
-        instructionsTableView.rowHeight = UITableView.automaticDimension
-        instructionsTableView.estimatedRowHeight = 100
     }
         
     private func addShadows(to view: UIView, corners: CACornerMask) {
@@ -113,7 +110,6 @@ extension DetailViewController: UICollectionViewDataSource {
         ingredientCollectionViewCell.configure(data: detailViewModel.getInfo(for: indexPath))
         return ingredientCollectionViewCell
     }
-    
 }
 
 //MARK: - UICollectionViewCompositionalLayout
@@ -154,33 +150,18 @@ extension DetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         detailViewModel.numberOfItems(for: section) ?? 1
     }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        detailViewModel.title(for: section) ?? "Instruction"
-    }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath != detailViewModel.selectedIndexPath {
-//            return 100
-//        }
-//        return .zero
-//    }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let selectedIndexPath = detailViewModel.selectedIndexPath,
-           indexPath == IndexPath(row: selectedIndexPath.row + 1,
-                                  section: selectedIndexPath.section) {
-            guard let stepCell = tableView.dequeueReusableCell(withIdentifier: StepTableViewCell.identifier)
-                    as? StepTableViewCell else { return StepTableViewCell() }
-            stepCell.configure(data: detailViewModel.getStepInfo(for: indexPath))
-            return stepCell
-        }
-        
         guard let instructionCell = tableView.dequeueReusableCell(withIdentifier: InstructionTableViewCell.identifier)
                 as? InstructionTableViewCell else { return InstructionTableViewCell() }
-        instructionCell.titleLabel.text = detailViewModel.getStepNumber(for: indexPath)
+        instructionCell.configure(data: detailViewModel.getStepInfo(for: indexPath))
         return instructionCell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
+
 }
 
 //MARK: - UITableViewDelegate
@@ -188,26 +169,11 @@ extension DetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if let selectedIndexPath = detailViewModel.selectedIndexPath, selectedIndexPath == indexPath {
-            detailViewModel.selectedIndexPath = nil
-            tableView.beginUpdates()
-            tableView.deleteRows(at: [IndexPath(row: indexPath.row + 1, section: indexPath.section)], with: .fade)
-            tableView.endUpdates()
-            return
+        guard let instructionCell = tableView.cellForRow(at: indexPath) as? InstructionTableViewCell else { return }
+        instructionCell.setExpandableView()
+        UIView.animate(withDuration: 0.3) {
+            tableView.performBatchUpdates(nil)
         }
-        
-        // Collapse the previously expanded cell
-        if let selectedIndexPath = detailViewModel.selectedIndexPath {
-            detailViewModel.selectedIndexPath = nil
-            tableView.beginUpdates()
-            tableView.deleteRows(at: [IndexPath(row: selectedIndexPath.row + 1, section: selectedIndexPath.section)], with: .fade)
-            tableView.endUpdates()
-            return
-        }
-        
-        detailViewModel.selectedIndexPath = indexPath
-        tableView.beginUpdates()
-        tableView.insertRows(at: [IndexPath(row: indexPath.row + 1, section: indexPath.section)], with: .fade)
-        tableView.endUpdates()
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
 }

@@ -55,7 +55,7 @@ struct MockData {
                                  length: nil)
     
     static let thirdStep =  Step(number: 3,
-                                 step: "Whisk the egg whites until soft peaks form.Fold the egg whites gently into the egg yolks cream.Gently stir in almonds and cocoa.Lightly butter and flour a 20 round cake pan, line with parchment paper.",
+                                 step: "Cut into one single \"steak\" piece working around the bone. Save smaller pieces for cooking as well. Set aside in a large mixing bowl.Pulse the marinade ingredients in a food processor until smooth.Coat the chicken pieces with the marinade. Marinate overnight in the refrigerator or a minimum of 6-12 hours. With a skewer or toothpick, piercing the thighs for extra marinade absorption is optional.Preheat a skillet or non stick pan over medium heat.",
                                  length: nil)
     static let steps = [firstStep, secondStep, thirdStep]
 }
