@@ -122,7 +122,7 @@ extension HomeViewController: EmptyStatusViewProtocol {
 }
 
 //MARK: - FilterDataProtocol
-extension HomeViewController: FilterDataDelegate {
+extension HomeViewController: FilterDataProtocol {
     func perfomUpdates() {
         homeViewModel?.filterData()
     }

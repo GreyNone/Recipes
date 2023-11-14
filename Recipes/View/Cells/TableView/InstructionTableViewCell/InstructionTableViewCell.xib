@@ -22,10 +22,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="540" height="234"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="74b-gX-q5d" userLabel="MainStackView">
-                                <rect key="frame" x="0.0" y="0.0" width="540" height="95.666666666666671"/>
+                                <rect key="frame" x="0.0" y="0.0" width="540" height="112.33333333333333"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ij-dF-HDj">
-                                        <rect key="frame" x="0.0" y="0.0" width="490" height="95.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="54" height="112.33333333333333"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Label">
                                                 <attributes>
@@ -36,17 +36,31 @@
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="55D-Sf-OCZ">
-                                        <rect key="frame" x="490" y="0.0" width="50" height="95.666666666666671"/>
-                                        <color key="tintColor" name="mainColor"/>
-                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jwS-Nb-vrB" userLabel="ImageViewWrapper">
+                                        <rect key="frame" x="54" y="0.0" width="486" height="112.33333333333333"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="55D-Sf-OCZ">
+                                                <rect key="frame" x="466" y="0.0" width="20" height="112.33333333333333"/>
+                                                <color key="tintColor" name="mainColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="20" id="c9f-l9-es8"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="55D-Sf-OCZ" secondAttribute="trailing" id="Mmi-4r-IXW"/>
+                                            <constraint firstAttribute="bottom" secondItem="55D-Sf-OCZ" secondAttribute="bottom" id="a8y-zI-IGy"/>
+                                            <constraint firstItem="55D-Sf-OCZ" firstAttribute="top" secondItem="jwS-Nb-vrB" secondAttribute="top" id="hOP-yQ-6pX"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Izn-UL-Ng8" userLabel="expandableView">
-                                <rect key="frame" x="0.0" y="95.666666666666671" width="540" height="138.33333333333331"/>
+                                <rect key="frame" x="0.0" y="112.33333333333331" width="540" height="121.66666666666669"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="czp-xW-x6D">
-                                        <rect key="frame" x="0.0" y="0.0" width="540" height="138.33333333333334"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="540" height="121.66666666666667"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Label">
                                                 <attributes>

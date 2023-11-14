@@ -2,7 +2,7 @@
 //  EmptyStatusViewProtocol.swift
 //  Recipes
 //
-//  Created by Александр Василевич on 5.11.23.
+//  Created by Александр Василевич on 14.11.23.
 //
 
 import Foundation

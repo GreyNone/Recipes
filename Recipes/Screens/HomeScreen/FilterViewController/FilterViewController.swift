@@ -12,7 +12,7 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var filterTableView: UITableView!
     private var filterViewModel = FilterViewModel()
-    weak var delegate: FilterDataDelegate?
+    weak var delegate: FilterDataProtocol?
     
     //MARK: - Controller lifecycle
     override func viewDidLoad() {

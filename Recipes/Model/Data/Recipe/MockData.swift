@@ -45,17 +45,13 @@ struct MockData {
     static let ingridients = [firstMockIngridient, secondMockIngridient]
     
     static let firstStep = Step(number: 1,
-                                step: "For the sponge, beat egg yolks with sugar for 3-4 minutes until the mixture doubles in volume and becomes pale yellow.",
-                                length: firstLength)
-    static let firstLength = Length(number: 4,
-                                    unit: "minutes")
+                                step: "For the sponge, beat egg yolks with sugar for 3-4 minutes until the mixture doubles in volume and becomes pale yellow.")
     
     static let secondStep = Step(number: 2,
-                                 step: "Whisk the egg whites until soft peaks form.Fold the egg whites gently into the egg yolks cream.Gently stir in almonds and cocoa.Lightly butter and flour a 20 round cake pan, line with parchment paper.",
-                                 length: nil)
+                                 step: "Whisk the egg whites until soft peaks form.Fold the egg whites gently into the egg yolks cream.Gently stir in almonds and cocoa.Lightly butter and flour a 20 round cake pan, line with parchment paper.")
     
     static let thirdStep =  Step(number: 3,
-                                 step: "Cut into one single \"steak\" piece working around the bone. Save smaller pieces for cooking as well. Set aside in a large mixing bowl.Pulse the marinade ingredients in a food processor until smooth.Coat the chicken pieces with the marinade. Marinate overnight in the refrigerator or a minimum of 6-12 hours. With a skewer or toothpick, piercing the thighs for extra marinade absorption is optional.Preheat a skillet or non stick pan over medium heat.",
-                                 length: nil)
+                                 step: "Cut into one single \"steak\" piece working around the bone. Save smaller pieces for cooking as well. Set aside in a large mixing bowl.Pulse the marinade ingredients in a food processor until smooth.Coat the chicken pieces with the marinade. Marinate overnight in the refrigerator or a minimum of 6-12 hours. With a skewer or toothpick, piercing the thighs for extra marinade absorption is optional.Preheat a skillet or non stick pan over medium heat.")
+    
     static let steps = [firstStep, secondStep, thirdStep]
 }
