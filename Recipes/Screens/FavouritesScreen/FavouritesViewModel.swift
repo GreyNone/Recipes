@@ -5,7 +5,7 @@
 //  Created by Александр Василевич on 12.11.23.
 //
 
-import Foundation
+import UIKit
 
 final class FavouritesViewModel {
     
@@ -19,9 +19,9 @@ extension FavouritesViewModel {
         favouritesRecipes.count
     }
     
-    func getInfo(for indexPath: IndexPath) -> (image: String?, title: String?, readyInMinutes: Int?) {
+    func getInfo(for indexPath: IndexPath) -> (image: String?, savedImage: UIImage?, title: String?, readyInMinutes: Int?) {
         let recipe = favouritesRecipes[indexPath.row]
-        return (image: recipe.image, recipe.title, recipe.readyInMinutes)
+        return (image: recipe.image, recipe.savedImage, recipe.title, recipe.readyInMinutes)
     }
     
     func selectedRecipe(indexPath: IndexPath) -> Recipe {

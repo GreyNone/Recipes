@@ -20,7 +20,11 @@ final class DetailViewModel {
 //MARK: - UISetup
 extension DetailViewModel {
     func setupUI() {
-        loadImage()
+        if let savedImage = recipe.savedImage {
+            delegate?.setImage(image: savedImage)
+        } else {
+            loadImage()
+        }
         
         delegate?.setTitle(text: recipe.title ?? "")
         delegate?.setPriceLabel(text: "Price: $ \(recipe.pricePerServing ?? 10.0)")

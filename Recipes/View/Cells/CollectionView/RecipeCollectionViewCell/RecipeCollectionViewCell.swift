@@ -25,9 +25,13 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func configure(data: (image: String?, title: String?, readyInMinutes: Int?)) {
-       request = NetworkManager.shared.loadImage(imageString: data.image) { [weak self] image in
-            self?.recipeImageView.image = image
+    func configure(data: (image: String?, savedImage: UIImage?, title: String?, readyInMinutes: Int?)) {
+        if let savedImage = data.savedImage {
+            self.recipeImageView.image = savedImage
+        } else {
+            request = NetworkManager.shared.loadImage(imageString: data.image) { [weak self] image in
+                self?.recipeImageView.image = image
+            }
         }
         recipeImageView.layer.cornerRadius = 10
         

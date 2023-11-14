@@ -5,7 +5,7 @@
 //  Created by Александр Василевич on 19.10.23.
 //
 
-import Foundation
+import UIKit
 
 struct Recipes: Decodable {
     var recipes: [Recipe]?
@@ -35,6 +35,7 @@ struct Recipe: Decodable {
     var analyzedInstructions: [AnalyzedInstruction]?
     
     var filterCases = [FilterCases]()
+    var savedImage: UIImage?
     
     enum CodingKeys: String, CodingKey {
         case vegetarian
@@ -55,6 +56,9 @@ struct Recipe: Decodable {
         case instructions
         case analyzedInstructions
     }
+}
+
+extension Recipe {
     
     mutating func appendFilterCases() {
             if let isVegetarian = self.vegetarian, isVegetarian {
@@ -74,4 +78,3 @@ struct Recipe: Decodable {
             }
         }
 }
-

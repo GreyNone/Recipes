@@ -76,9 +76,9 @@ extension HomeViewModel {
         filteredRecipes.count
     }
     
-    func getInfo(for indexPath: IndexPath) -> (image: String?, title: String?, readyInMinutes: Int?) {
+    func getInfo(for indexPath: IndexPath) -> (image: String?, savedImage: UIImage?, title: String?, readyInMinutes: Int?) {
         let recipe = filteredRecipes[indexPath.row]
-        return (image: recipe.image, recipe.title, recipe.readyInMinutes)
+        return (image: recipe.image, recipe.savedImage, recipe.title, recipe.readyInMinutes)
     }
     
     func selectedRecipe(indexPath: IndexPath) -> Recipe {
