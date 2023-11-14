@@ -44,7 +44,20 @@ extension HomeViewModel {
     func loadIfNeeded(for indexPath: IndexPath) {
 //        let currentItem = indexPath.row
 //        if currentItem >= allRecipes.count - 2 {
-//            loadData()
+//            NetworkManager.shared.loadRecipes { [weak self] (recipes) in
+//                guard let self = self else { return }
+//                if let recipes = recipes {
+//                    for var recipe in recipes {
+//                        recipe.appendFilterCases()
+//                        
+//                        self.allRecipes.append(recipe)
+//                        self.filteredRecipes.append(recipe)
+//                        
+//                        let indexPath = IndexPath(item: self.filteredRecipes.count - 1, section: 0)
+//                        delegate?.insertNewElementInCollectionView(at: indexPath)
+//                    }
+//                }
+//            }
 //        }
     }
 }
@@ -57,7 +70,7 @@ extension HomeViewModel {
     }
 }
 
-//MARK: - CollectionViewData
+//MARK: - CollectionViewDataSource
 extension HomeViewModel {
     var numberOfItems: Int {
         filteredRecipes.count
@@ -74,6 +87,7 @@ extension HomeViewModel {
     
     func filterData() {
         filteredRecipes = []
+        
         let checkedFilters = FilterData.allData.filter { filter in
             filter.isChecked
         }
@@ -90,7 +104,6 @@ extension HomeViewModel {
         }
         
         filteredRecipes = allRecipes.filter({ $0.filterCases.contains(checkedFilterCases) })
-    
         delegate?.updateCollectionView()
     }
 }

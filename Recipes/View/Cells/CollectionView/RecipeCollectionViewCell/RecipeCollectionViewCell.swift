@@ -25,17 +25,14 @@ class RecipeCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func setupCollectionViewCell(data: (image: String?, title: String?, readyInMinutes: Int?)) {
+    func configure(data: (image: String?, title: String?, readyInMinutes: Int?)) {
        request = NetworkManager.shared.loadImage(imageString: data.image) { [weak self] image in
             self?.recipeImageView.image = image
         }
         recipeImageView.layer.cornerRadius = 10
-        titleLabel.text = data.title
-        readyInMinutesLabel.text? = "Ready in \(data.readyInMinutes ?? 0) minutes"
-    }
-    
-    @IBAction func didClickOnLikeButton(sender: UIButton) {
         
+        titleLabel.text = data.title
+        readyInMinutesLabel.text? = "Ready in: \(data.readyInMinutes ?? 0) minutes"
     }
     
     override func prepareForReuse() {

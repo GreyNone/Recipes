@@ -33,6 +33,7 @@ struct Recipe: Decodable {
     var summary: String?
     var instructions: String?
     var analyzedInstructions: [AnalyzedInstruction]?
+    
     var filterCases = [FilterCases]()
     
     enum CodingKeys: String, CodingKey {

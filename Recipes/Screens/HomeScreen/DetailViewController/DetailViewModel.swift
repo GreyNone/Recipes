@@ -23,14 +23,15 @@ extension DetailViewModel {
         loadImage()
         
         delegate?.setTitle(text: recipe.title ?? "")
+        delegate?.setPriceLabel(text: "Price: $ \(recipe.pricePerServing ?? 10.0)")
         delegate?.setSummaryText(text: createAttributedString(string: recipe.summary ?? "") ?? NSAttributedString())
     }
     
     private func createAttributedString(string: String) -> NSAttributedString? {
         do {
-            let modifiedFont = String(format:"<span style=\"font-family: '-apple-system', 'Arial'; font-size: \(17)\">%@</span>", string)
+            let modifiedFont = String(format:"<span style=\"font-family: '-apple-system', 'Arial'; font-size: \(15)\">%@</span>", string)
             let attributedString = try NSAttributedString(data: modifiedFont.data(using: .unicode, allowLossyConversion: true)!,
-                                                   options: [.documentType: NSAttributedString.DocumentType.html,
+                                                          options: [.documentType: NSAttributedString.DocumentType.html,
                                                              .characterEncoding:String.Encoding.utf8.rawValue],
                                                    documentAttributes: nil)
             return attributedString

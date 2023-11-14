@@ -10,5 +10,6 @@ import UIKit
 protocol DetailViewModelDelegate: AnyObject {
     func setImage(image: UIImage)
     func setTitle(text: String)
+    func setPriceLabel(text: String)
     func setSummaryText(text: NSAttributedString)
 }

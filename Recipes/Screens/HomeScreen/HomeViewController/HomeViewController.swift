@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private var emptyStatusView: EmptyStatusView?
     private var homeViewModel: HomeViewModel?
-    private var isShowingView = false
+//    private var isShowingView = false
     
     //MARK: - Controller lifecycle
     override func viewDidLoad() {
@@ -24,19 +24,19 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Food Recipes For You"
-        isShowingView = true
+//        isShowingView = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        isShowingView = false
+//        isShowingView = false
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if isShowingView {
-            recipesCollectionView.collectionViewLayout.invalidateLayout()
-        }
+//        if isShowingView {
+//            recipesCollectionView.collectionViewLayout.invalidateLayout()
+//        }
     }
     
     private func setup() {
@@ -70,6 +70,12 @@ extension HomeViewController: HomeViewModelDelegate {
     
     func updateCollectionView() {
         recipesCollectionView.reloadData()
+    }
+    
+    func insertNewElementInCollectionView(at indexPath: IndexPath) {
+        recipesCollectionView.performBatchUpdates {
+            recipesCollectionView.insertItems(at: [indexPath])
+        }
     }
     
     func startActivityIndicator() {
@@ -136,10 +142,22 @@ extension HomeViewController: UICollectionViewDataSource {
                 as? RecipeCollectionViewCell else { return RecipeCollectionViewCell() }
         
         if let homeViewModel = homeViewModel {
-            recipeCollectonViewCell.setupCollectionViewCell(data: homeViewModel.getInfo(for: indexPath))
+            recipeCollectonViewCell.configure(data: homeViewModel.getInfo(for: indexPath))
         }
         
         return recipeCollectonViewCell
+    }
+}
+
+//MARK: - UICollectionViewDelegate
+extension HomeViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.navigationController?.pushViewController(DetailViewController.makeDetailViewController(recipe: homeViewModel?.selectedRecipe(indexPath: indexPath)), animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        homeViewModel?.loadIfNeeded(for: indexPath)
     }
 }
 
@@ -150,10 +168,10 @@ extension HomeViewController {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
             let count = 2
-            let interGroupSpacing = 10.0
-            let contentInsets = NSDirectionalEdgeInsets(top: 5.0, leading: 5.0, bottom: 5.0, trailing: 5.0)
+            let interGroupSpacing = 5.0
+            let contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
             
-            let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+            let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6),
                                                                                         heightDimension: .fractionalHeight(1.0)))
             leadingItem.contentInsets = contentInsets
             
@@ -161,7 +179,7 @@ extension HomeViewController {
                                                                                          heightDimension: .fractionalHeight(0.5)))
             trailingItem.contentInsets = contentInsets
             
-            let trailingGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+            let trailingGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
                                                                                                     heightDimension: .fractionalHeight(1.0)),
                                                                  repeatingSubitem: trailingItem,
                                                                  count: count)
@@ -175,7 +193,7 @@ extension HomeViewController {
             bottomItem.contentInsets = contentInsets
 
             let nestedGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                                                  heightDimension: .fractionalHeight(1.0)),
+                                                                                                  heightDimension: .fractionalHeight(1.2)),
                                                                subitems: [topNestedGroup, bottomItem])
             
             let section = NSCollectionLayoutSection(group: nestedGroup)
@@ -191,15 +209,4 @@ extension HomeViewController {
     }
 }
 
-//MARK: - UICollectionViewDelegate
-extension HomeViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(DetailViewController.makeDetailViewController(recipe: homeViewModel?.selectedRecipe(indexPath: indexPath)), animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        homeViewModel?.loadIfNeeded(for: indexPath)
-    }
-}
 

@@ -12,6 +12,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var likeItemVIew: ItemView!
     @IBOutlet weak var timeItemView: ItemView!
     @IBOutlet weak var healthItemView: ItemView!
+    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -19,6 +20,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var itemsContainerView: UIView!
     @IBOutlet weak var ingredientsCollectionView: UICollectionView!
     @IBOutlet weak var instructionsTableView: UITableView!
+    @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
     var detailViewModel: DetailViewModel!
     
     static func makeDetailViewController(recipe: Recipe?) -> DetailViewController {
@@ -37,30 +39,37 @@ class DetailViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.prefersLargeTitles = false
         self.title = detailViewModel.recipe.title
+        
+        self.instructionsTableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.prefersLargeTitles = true
         self.title = nil
+        
+        self.instructionsTableView.removeObserver(self, forKeyPath: "contentSize")
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "contentSize" {
+            if let newValue = change?[.newKey] {
+                let newSize = newValue as! CGSize
+                self.tableViewHeightConstraint.constant = newSize.height + 50.0
+            }
+        }
+    }
+    
+    //MARK: - Custom Setup
     private func setup() {
         self.detailViewModel.delegate = self
         detailViewModel.setupUI()
         
+        setupItemViews()
         addShadows(to: titleContainerView, corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addShadows(to: itemsContainerView, corners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
         
-        likeItemVIew.configure(title: "\(detailViewModel.recipe.aggregateLikes ?? 0)",
-                               image: UIImage(systemName: "hand.thumbsup")!,
-                               tintColor: .systemYellow)
-        timeItemView.configure(title: "\(detailViewModel.recipe.cookingMinutes ?? 30)",
-                               image: UIImage(systemName: "clock")!,
-                               tintColor: .systemBlue)
-        healthItemView.configure(title: "\(detailViewModel.recipe.healthScore ?? 20)",
-                                 image: UIImage(systemName: "heart")!,
-                                 tintColor: .systemRed)
+        addLikeButtonToNavigationBar()
         
         ingredientsCollectionView.register(IngredientCollectionViewCell.nib, forCellWithReuseIdentifier: IngredientCollectionViewCell.identifier)
         configureHierarchy()
@@ -76,6 +85,41 @@ class DetailViewController: UIViewController {
         view.layer.shadowRadius = 4
         view.layer.maskedCorners = corners
     }
+    
+    private func setupItemViews() {
+        likeItemVIew.configure(title: "\(detailViewModel.recipe.aggregateLikes ?? 0)",
+                               image: UIImage(systemName: "hand.thumbsup")!,
+                               tintColor: .systemYellow)
+        timeItemView.configure(title: "\(detailViewModel.recipe.cookingMinutes ?? 30)",
+                               image: UIImage(systemName: "clock")!,
+                               tintColor: .systemBlue)
+        healthItemView.configure(title: "\(detailViewModel.recipe.healthScore ?? 20)",
+                                 image: UIImage(systemName: "heart")!,
+                                 tintColor: .systemRed)
+    }
+    
+    private func addLikeButtonToNavigationBar() {
+        let likeBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart"),
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(likeButtonTapped))
+        likeBarButtonItem.tintColor = UIColor(named: "mainColor")
+        self.navigationItem.rightBarButtonItem = likeBarButtonItem
+    }
+    
+    //MARK: - Actions
+    @objc func likeButtonTapped() {
+         
+     }
+    
+    private func likeRecipe() {
+        
+    }
+    
+    private func dislikeRecipe() {
+        
+    }
+
 }
 
 //MARK: - DetailViewModelDelegate
@@ -87,6 +131,10 @@ extension DetailViewController: DetailViewModelDelegate {
     
     func setTitle(text: String) {
         titleLabel.text = text
+    }
+    
+    func setPriceLabel(text: String) {
+        priceLabel.text = text
     }
     
     func setSummaryText(text: NSAttributedString) {
@@ -171,9 +219,10 @@ extension DetailViewController: UITableViewDelegate {
         
         guard let instructionCell = tableView.cellForRow(at: indexPath) as? InstructionTableViewCell else { return }
         instructionCell.setExpandableView()
+        
         UIView.animate(withDuration: 0.3) {
             tableView.performBatchUpdates(nil)
         }
-        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+//        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
 }

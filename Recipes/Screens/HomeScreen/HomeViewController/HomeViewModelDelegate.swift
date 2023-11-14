@@ -9,6 +9,7 @@ import Foundation
 
 protocol HomeViewModelDelegate: AnyObject {
     func updateCollectionView()
+    func insertNewElementInCollectionView(at indexPath: IndexPath)
     func startActivityIndicator()
     func stopActivityIndicator()
     func presentEmptyStatusView()
