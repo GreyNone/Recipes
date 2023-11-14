@@ -34,9 +34,6 @@ struct Recipe: Decodable {
     var instructions: String?
     var analyzedInstructions: [AnalyzedInstruction]?
     
-    var filterCases = [FilterCases]()
-    var savedImage: UIImage?
-    
     enum CodingKeys: String, CodingKey {
         case vegetarian
         case vegan
@@ -56,10 +53,12 @@ struct Recipe: Decodable {
         case instructions
         case analyzedInstructions
     }
+    
+    var filterCases = [FilterCases]()
+    var savedImage: UIImage?
 }
 
 extension Recipe {
-    
     mutating func appendFilterCases() {
             if let isVegetarian = self.vegetarian, isVegetarian {
                 self.filterCases.append(.vegetarian)

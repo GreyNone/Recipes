@@ -1,2 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier=""/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDAnalyzedInstruction" representedClassName="CDAnalyzedInstruction" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRecipe" inverseName="analyzedInstructions" inverseEntity="CDRecipe"/>
+        <relationship name="steps" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="CDStep" inverseName="analyzedInstruction" inverseEntity="CDStep"/>
+    </entity>
+    <entity name="CDIngredient" representedClassName="CDIngredient" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="consistency" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="savedImage" optional="YES" attributeType="Binary"/>
+        <attribute name="unit" optional="YES" attributeType="String"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDRecipe" inverseName="extendedIngredients" inverseEntity="CDRecipe"/>
+    </entity>
+    <entity name="CDRecipe" representedClassName="CDRecipe" syncable="YES">
+        <attribute name="aggregateLikes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="cheap" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="cookingInMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="healthScore" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="instructions" optional="YES" attributeType="String"/>
+        <attribute name="pricePerServing" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="readyInMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="savedImage" optional="YES" attributeType="Binary"/>
+        <attribute name="summary" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="vegan" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="vegetarian" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="veryHealthy" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="veryPopular" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="analyzedInstructions" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="CDAnalyzedInstruction" inverseName="recipe" inverseEntity="CDAnalyzedInstruction"/>
+        <relationship name="extendedIngredients" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="CDIngredient" inverseName="recipe" inverseEntity="CDIngredient"/>
+    </entity>
+    <entity name="CDStep" representedClassName="CDStep" syncable="YES">
+        <attribute name="number" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="step" optional="YES" attributeType="String"/>
+        <relationship name="analyzedInstruction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDAnalyzedInstruction" inverseName="steps" inverseEntity="CDAnalyzedInstruction"/>
+    </entity>
+</model>

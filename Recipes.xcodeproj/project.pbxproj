@@ -258,7 +258,6 @@
 				97B914C12AE1770C0075B828 /* View */,
 				97B914BD2AE176C00075B828 /* Screens */,
 				974C381F2AE065FF0084F1D1 /* Assets.xcassets */,
-				974C38212AE065FF0084F1D1 /* LaunchScreen.storyboard */,
 				974C38242AE065FF0084F1D1 /* Info.plist */,
 				974C381C2AE065FC0084F1D1 /* Recipes.xcdatamodeld */,
 			);
@@ -298,6 +297,7 @@
 			children = (
 				974C38172AE065FC0084F1D1 /* MainTabBarController.swift */,
 				974C38192AE065FC0084F1D1 /* Main.storyboard */,
+				974C38212AE065FF0084F1D1 /* LaunchScreen.storyboard */,
 				97B914BE2AE176CA0075B828 /* HomeScreen */,
 				97B914C02AE176EF0075B828 /* NewRecipeScreen */,
 				97B914BF2AE176D50075B828 /* FavouritesScreen */,

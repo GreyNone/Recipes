@@ -5,7 +5,7 @@
 //  Created by Александр Василевич on 14.11.23.
 //
 
-import Foundation
+import UIKit
 
 struct Ingredient: Decodable {
     var id: Int?
@@ -14,6 +14,8 @@ struct Ingredient: Decodable {
     var consistency: String?
     var amount: Float?
     var unit: String?
+    
+    var savedImage: UIImage?
     
     enum CodingKeys: String, CodingKey {
         case id
