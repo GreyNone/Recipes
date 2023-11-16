@@ -47,9 +47,6 @@ class DetailViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-//        self.title = nil
-        navigationController?.view.layer.add(TransitionAnimations.onPopTransition(), forKey: nil)
-        
         self.instructionsTableView.removeObserver(self, forKeyPath: "contentSize")
     }
     
@@ -66,6 +63,8 @@ class DetailViewController: UIViewController {
     private func setup() {
         self.detailViewModel.delegate = self
         detailViewModel.setupUI()
+        
+        self.navigationController?.delegate = self
         
         setupItemViews()
         addShadows(to: titleContainerView, corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
@@ -237,14 +236,21 @@ extension DetailViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension DetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
+        tableView.deselectRow(at: indexPath, animated: false)
+
         guard let instructionCell = tableView.cellForRow(at: indexPath) as? InstructionTableViewCell else { return }
         instructionCell.setExpandableView()
         
         UIView.animate(withDuration: 0.3) {
             tableView.performBatchUpdates(nil)
         }
-//        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
 }
+
+//MARK: - UINavigationControllerDelegate
+extension DetailViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return AnimationController(animationDuration: 1.0, animationType: .dismiss)
+    }
+}
+

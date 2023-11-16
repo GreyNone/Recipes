@@ -13,7 +13,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private var emptyStatusView: EmptyStatusView?
     private var homeViewModel: HomeViewModel?
-//    private var isShowingView = false
     
     //MARK: - Controller lifecycle
     override func viewDidLoad() {
@@ -23,26 +22,19 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = "Food Recipes For You"
         
+        self.navigationController?.delegate = self
+        self.navigationItem.title = "Food Recipes For You"
         navigationController?.navigationBar.prefersLargeTitles = true
-//        isShowingView = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        self.navigationItem.title = nil
         navigationController?.navigationBar.prefersLargeTitles = false
-//        isShowingView = false
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        if isShowingView {
-//            recipesCollectionView.collectionViewLayout.invalidateLayout()
-//        }
-    }
-    
+
     //MARK: - Custom Setup
     private func setup() {
         self.homeViewModel = HomeViewModel()
@@ -74,9 +66,11 @@ class HomeViewController: UIViewController {
         let filterViewStoryboard = UIStoryboard(name: "FilterViewStoryboard", bundle: nil)
         let filterViewController = filterViewStoryboard.instantiateViewController(withIdentifier: "FilterViewController") as! FilterViewController
         filterViewController.delegate = self
+        
         if let sheetPresentationController = filterViewController.sheetPresentationController {
             sheetPresentationController.detents = [.medium()]
         }
+        
         self.present(filterViewController, animated: true)
     }
 }
@@ -170,11 +164,10 @@ extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        navigationController?.view.layer.add(TransitionAnimations.onPushTransition(), forKey: nil)
+//        navigationController?.view.layer.add(TransitionAnimations.onPushTransition(), forKey: nil)
         self.navigationController?.pushViewController(DetailViewController.makeDetailViewController(recipe:
                                                                                                         homeViewModel?.selectedRecipe(indexPath: indexPath)),
-                                                      animated: false)
-        
+                                                      animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -245,4 +238,10 @@ extension HomeViewController {
     }
 }
 
+//MARK: - UINavigationControllerDelegate
+extension HomeViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return AnimationController(animationDuration: 1.0, animationType: .present)
+    }
+}
 

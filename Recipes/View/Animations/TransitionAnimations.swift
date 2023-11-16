@@ -9,23 +9,23 @@ import UIKit
 
 class TransitionAnimations {
     
-    static func onPushTransition() -> CATransition {
-        let onPushTransition = CATransition()
-        onPushTransition.duration = 0.25
-        onPushTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        onPushTransition.type = CATransitionType.fade
-        onPushTransition.subtype = CATransitionSubtype.fromBottom
-        return onPushTransition
-    }
-    
-    static func onPopTransition() -> CATransition {
-        let onPopTransition = CATransition()
-        onPopTransition.duration = 0.5
-        onPopTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        onPopTransition.type = CATransitionType.reveal
-        onPopTransition.subtype = CATransitionSubtype.fromTop
-        return onPopTransition
-    }
+//    static func onPushTransition() -> CATransition {
+//        let onPushTransition = CATransition()
+//        onPushTransition.duration = 0.25
+//        onPushTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+//        onPushTransition.type = CATransitionType.fade
+//        onPushTransition.subtype = CATransitionSubtype.fromBottom
+//        return onPushTransition
+//    }
+//    
+//    static func onPopTransition() -> CATransition {
+//        let onPopTransition = CATransition()
+//        onPopTransition.duration = 0.5
+//        onPopTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+//        onPopTransition.type = CATransitionType.reveal
+//        onPopTransition.subtype = CATransitionSubtype.fromTop
+//        return onPopTransition
+//    }
     
     static func onDisplayFromLeftTransition() -> CATransition {
         let onDisplayFromLeftTransition = CATransition()
