@@ -88,3 +88,19 @@ extension DetailViewModel {
         return ("Step \(step?.number ?? 0)", step?.step ?? "")
     }
 }
+
+//MARK: - ScrollViewDelegate
+extension DetailViewModel {
+    func onScrollUpdate(contentOffsetY: CGFloat, imageContainerViewHeight: CGFloat) {
+        let normalizedAlpha = contentOffsetY / imageContainerViewHeight
+        let alpha = 1.0 - normalizedAlpha
+        delegate?.setImageContainerViewAlpha(value: alpha)
+        
+        if contentOffsetY > imageContainerViewHeight - imageContainerViewHeight * 0.3 + 40  {
+            delegate?.setNavigationTitle(text: recipe.title ?? "Recipe")
+        } else {
+            delegate?.setNavigationTitle(text: nil)
+        }
+
+    }
+}

@@ -30,9 +30,7 @@ class FavouritesViewController: UIViewController {
     func setup() {
         favouritesViewModel = FavouritesViewModel()
         favouritesViewModel?.delegate = self
-        
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-        
+                
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem?.tintColor = UIColor(named: "mainColor")
         

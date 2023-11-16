@@ -24,11 +24,15 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Food Recipes For You"
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
 //        isShowingView = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        navigationController?.navigationBar.prefersLargeTitles = false
 //        isShowingView = false
     }
     
@@ -39,6 +43,7 @@ class HomeViewController: UIViewController {
 //        }
     }
     
+    //MARK: - Custom Setup
     private func setup() {
         self.homeViewModel = HomeViewModel()
         self.homeViewModel?.delegate = self
@@ -46,6 +51,7 @@ class HomeViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem?.tintColor = UIColor(named: "mainColor")
+        addFilterButtonToNavigationBar()
         
         recipesCollectionView.register(RecipeCollectionViewCell.nib, forCellWithReuseIdentifier: RecipeCollectionViewCell.identifier)
         configureHierarchy()
@@ -53,8 +59,18 @@ class HomeViewController: UIViewController {
         self.homeViewModel?.loadData()
     }
     
-    //MARK: - IBActions
-    @IBAction func didTapOnFilterButton(_ sender: Any) {
+    private func addFilterButtonToNavigationBar() {
+        let likeBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"),
+                                                style: .plain,
+                                                target: self,
+                                                action: #selector(didTapOnFilterButton))
+        likeBarButtonItem.tintColor = UIColor(named: "mainColor")
+        self.navigationItem.rightBarButtonItem = likeBarButtonItem
+    }
+    
+    //MARK: - Actions
+    
+    @objc func didTapOnFilterButton() {
         let filterViewStoryboard = UIStoryboard(name: "FilterViewStoryboard", bundle: nil)
         let filterViewController = filterViewStoryboard.instantiateViewController(withIdentifier: "FilterViewController") as! FilterViewController
         filterViewController.delegate = self
@@ -153,11 +169,31 @@ extension HomeViewController: UICollectionViewDataSource {
 extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(DetailViewController.makeDetailViewController(recipe: homeViewModel?.selectedRecipe(indexPath: indexPath)), animated: true)
+        
+        navigationController?.view.layer.add(TransitionAnimations.onPushTransition(), forKey: nil)
+        self.navigationController?.pushViewController(DetailViewController.makeDetailViewController(recipe:
+                                                                                                        homeViewModel?.selectedRecipe(indexPath: indexPath)),
+                                                      animated: false)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         homeViewModel?.loadIfNeeded(for: indexPath)
+        
+        if let isScrollingToBottom = homeViewModel?.isScrollingToBottom, isScrollingToBottom {
+            cell.layer.add(TransitionAnimations.onDisplayFromLeftTransition(), forKey: nil)
+        } else {
+            cell.layer.add(TransitionAnimations.onDisplayFromRightTransition(), forKey: nil)
+        }
+    }
+}
+
+//MARK: - UIScrollViewDelegate
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        homeViewModel?.calculateScrollDirection(contentOffsetY: scrollView.contentOffset.y,
+                                                contentSizeHeight: scrollView.contentSize.height,
+                                                scrollViewFrameHeight: scrollView.frame.height)
     }
 }
 
@@ -167,22 +203,22 @@ extension HomeViewController {
         let layout = UICollectionViewCompositionalLayout {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
-            let count = 2
+            let trailingGroupCount = 1
             let interGroupSpacing = 5.0
             let contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
             
-            let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6),
+            let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
                                                                                         heightDimension: .fractionalHeight(1.0)))
             leadingItem.contentInsets = contentInsets
             
-            let trailingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                                         heightDimension: .fractionalHeight(0.5)))
+            let trailingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / CGFloat(trailingGroupCount)),
+                                                                                         heightDimension: .fractionalHeight(1.0 / CGFloat(trailingGroupCount))))
             trailingItem.contentInsets = contentInsets
             
-            let trailingGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
+            let trailingGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
                                                                                                     heightDimension: .fractionalHeight(1.0)),
                                                                  repeatingSubitem: trailingItem,
-                                                                 count: count)
+                                                                 count: trailingGroupCount)
             
             let topNestedGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                                                                                        heightDimension: .fractionalHeight(0.6)),
@@ -193,7 +229,7 @@ extension HomeViewController {
             bottomItem.contentInsets = contentInsets
 
             let nestedGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                                                  heightDimension: .fractionalHeight(1.2)),
+                                                                                                  heightDimension: .fractionalHeight(1.0)),
                                                                subitems: [topNestedGroup, bottomItem])
             
             let section = NSCollectionLayoutSection(group: nestedGroup)

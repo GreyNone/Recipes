@@ -9,6 +9,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    @IBOutlet weak var mainScrollView: UIScrollView!
     @IBOutlet weak var likeItemVIew: ItemView!
     @IBOutlet weak var timeItemView: ItemView!
     @IBOutlet weak var healthItemView: ItemView!
@@ -21,6 +22,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var ingredientsCollectionView: UICollectionView!
     @IBOutlet weak var instructionsTableView: UITableView!
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageContainerView: UIView!
+    @IBOutlet weak var imageViewContainerHeightConstraint: NSLayoutConstraint!
     var detailViewModel: DetailViewModel!
     
     static func makeDetailViewController(recipe: Recipe?) -> DetailViewController {
@@ -37,16 +40,15 @@ class DetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = false
-        self.title = detailViewModel.recipe.title
-        
+
         self.instructionsTableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.navigationBar.prefersLargeTitles = true
-        self.title = nil
+
+//        self.title = nil
+        navigationController?.view.layer.add(TransitionAnimations.onPopTransition(), forKey: nil)
         
         self.instructionsTableView.removeObserver(self, forKeyPath: "contentSize")
     }
@@ -75,6 +77,7 @@ class DetailViewController: UIViewController {
         configureHierarchy()
         
         instructionsTableView.register(InstructionTableViewCell.nib, forCellReuseIdentifier: InstructionTableViewCell.identifier)
+        
     }
         
     private func addShadows(to view: UIView, corners: CACornerMask) {
@@ -90,7 +93,7 @@ class DetailViewController: UIViewController {
         likeItemVIew.configure(title: "\(detailViewModel.recipe.aggregateLikes ?? 0)",
                                image: UIImage(systemName: "hand.thumbsup")!,
                                tintColor: .systemYellow)
-        timeItemView.configure(title: "\(detailViewModel.recipe.cookingMinutes ?? 30)",
+        timeItemView.configure(title: "\(detailViewModel.recipe.cookingMinutes ?? 30) min",
                                image: UIImage(systemName: "clock")!,
                                tintColor: .systemBlue)
         healthItemView.configure(title: "\(detailViewModel.recipe.healthScore ?? 20)",
@@ -140,6 +143,14 @@ extension DetailViewController: DetailViewModelDelegate {
     func setSummaryText(text: NSAttributedString) {
         summaryLabel.attributedText = text
     }
+
+    func setImageContainerViewAlpha(value: CGFloat) {
+        imageContainerView.alpha = value
+    }
+    
+    func setNavigationTitle(text: String?) {
+        self.title = text
+    }
 }
 
 //MARK: - UICollectionViewDataSource
@@ -166,9 +177,10 @@ extension DetailViewController {
         let layout = UICollectionViewCompositionalLayout {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
+            let ingredientsCount = 3
             let contentInsets = NSDirectionalEdgeInsets(top: 5.0, leading: 5.0, bottom: 5.0, trailing: 5.0)
-                        
-            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3),
+            
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / CGFloat(ingredientsCount)),
                                                                                  heightDimension: .fractionalHeight(1.0)))
             item.contentInsets = contentInsets
             
@@ -185,6 +197,16 @@ extension DetailViewController {
 
     private func configureHierarchy() {
         ingredientsCollectionView.collectionViewLayout = createLayout()
+    }
+}
+
+//MARK: - UIScrollViewDelegate
+extension DetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == mainScrollView {
+            detailViewModel.onScrollUpdate(contentOffsetY: scrollView.contentOffset.y,
+                                           imageContainerViewHeight: imageViewContainerHeightConstraint.constant)
+        }
     }
 }
 
