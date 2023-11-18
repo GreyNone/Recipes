@@ -11,15 +11,17 @@ class AnimationController: NSObject {
     
     private let animationDuration: Double
     private let animationType: AnimationType
+    private let startingPoint: CGPoint
     
     enum AnimationType {
         case present
         case dismiss
     }
     
-    init(animationDuration: Double, animationType: AnimationType) {
+    init(animationDuration: Double, animationType: AnimationType, startingPoint: CGPoint) {
         self.animationDuration = animationDuration
         self.animationType = animationType
+        self.startingPoint = startingPoint
     }
 }
 
@@ -30,50 +32,55 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toViewController = transitionContext.viewController(forKey: .to),
-              let fromViewController = transitionContext.viewController(forKey: .from) else {
+        switch animationType {
+        case .present:
+            presentAnimation(with: transitionContext)
+        case .dismiss:
+            dismissAnimation(with: transitionContext)
+        }
+    }
+    
+    func presentAnimation(with transitionContext: UIViewControllerContextTransitioning) {
+        guard let presentedView = transitionContext.view(forKey: .to) else {
             transitionContext.completeTransition(false)
             return
         }
         
-        switch animationType {
-        case .present:
-            transitionContext.containerView.addSubview(toViewController.view)
-            presentAnimation(with: transitionContext, viewToAnimate: toViewController.view)
-        case .dismiss:
-            transitionContext.containerView.addSubview(toViewController.view)
-            transitionContext.containerView.addSubview(fromViewController.view)
-            dismissAnimation(with: transitionContext, viewToAnimate: fromViewController.view)
-        }
-    }
-    
-    func presentAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
-        viewToAnimate.clipsToBounds = true
-        viewToAnimate.transform = CGAffineTransform(scaleX: 0, y: 0)
+        transitionContext.containerView.addSubview(presentedView)
         
+        let viewCenter = presentedView.center
+        presentedView.center = startingPoint
+        presentedView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+
         let duration = transitionDuration(using: transitionContext)
         
         UIView.animate(withDuration: duration,
                        delay: 0,
-                       usingSpringWithDamping: 1.0,
-                       initialSpringVelocity: 0.1,
                        options: .curveEaseInOut) {
-            viewToAnimate.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            presentedView.center = viewCenter
+            presentedView.transform = CGAffineTransform.identity
         } completion: { _ in
             transitionContext.completeTransition(true)
         }
     }
     
-    func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, viewToAnimate: UIView) {
+    func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning) {
+        guard let dismissedView = transitionContext.view(forKey: .from),
+              let toView = transitionContext.view(forKey: .to) else {
+            transitionContext.completeTransition(false)
+            return
+        }
+
+        transitionContext.containerView.addSubview(toView)
+        transitionContext.containerView.addSubview(dismissedView)
+
         let duration = transitionDuration(using: transitionContext)
-        let scaleDown = CGAffineTransform(scaleX: 0.001, y: 0.001)
-        
+     
         UIView.animate(withDuration: duration,
                        delay: 0,
-                       usingSpringWithDamping: 1.0,
-                       initialSpringVelocity: 0.1,
-                       options: .curveEaseInOut) {
-            viewToAnimate.transform = scaleDown
+                       options: .curveEaseInOut) { [weak self] in
+            guard let self = self else { return }
+            dismissedView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
         } completion: { _ in
             transitionContext.completeTransition(true)
         }

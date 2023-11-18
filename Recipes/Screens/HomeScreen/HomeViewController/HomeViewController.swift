@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var recipesCollectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private var emptyStatusView: EmptyStatusView?
-    private var homeViewModel: HomeViewModel?
+    var homeViewModel: HomeViewModel?
     
     //MARK: - Controller lifecycle
     override func viewDidLoad() {
@@ -164,7 +164,7 @@ extension HomeViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-//        navigationController?.view.layer.add(TransitionAnimations.onPushTransition(), forKey: nil)
+        self.homeViewModel?.selectedRecipeCell = collectionView.cellForItem(at: indexPath) as? RecipeCollectionViewCell
         self.navigationController?.pushViewController(DetailViewController.makeDetailViewController(recipe:
                                                                                                         homeViewModel?.selectedRecipe(indexPath: indexPath)),
                                                       animated: true)
@@ -234,14 +234,25 @@ extension HomeViewController {
 
     private func configureHierarchy() {
         recipesCollectionView.collectionViewLayout = createLayout()
-        
     }
 }
 
 //MARK: - UINavigationControllerDelegate
 extension HomeViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return AnimationController(animationDuration: 1.0, animationType: .present)
+        if operation == .push {
+            return AnimationController(animationDuration: 0.75,
+                                       animationType: .present,
+                                       startingPoint: recipesCollectionView.convert(homeViewModel?.selectedRecipeCell?.center ?? CGPoint(),
+                                                                            to: view))
+        } else if operation == .pop {
+            return AnimationController(animationDuration: 0.75,
+                                       animationType: .dismiss,
+                                       startingPoint: recipesCollectionView.convert(homeViewModel?.selectedRecipeCell?.center ?? CGPoint(),
+                                                                            to: view))
+        }
+        
+        return nil
     }
 }
 

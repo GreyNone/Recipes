@@ -15,7 +15,7 @@ final class HomeViewModel {
     var filteredRecipes = [Recipe]()
     var lastContentOffset: CGFloat = 0
     var isScrollingToBottom = true
-    
+    var selectedRecipeCell: RecipeCollectionViewCell?
 }
 
 //MARK: - Network

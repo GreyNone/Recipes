@@ -41,12 +41,14 @@ class DetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        self.tabBarController?.tabBar.isHidden = true
         self.instructionsTableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
+        self.tabBarController?.tabBar.isHidden = false
         self.instructionsTableView.removeObserver(self, forKeyPath: "contentSize")
     }
     
@@ -63,9 +65,7 @@ class DetailViewController: UIViewController {
     private func setup() {
         self.detailViewModel.delegate = self
         detailViewModel.setupUI()
-        
-        self.navigationController?.delegate = self
-        
+  
         setupItemViews()
         addShadows(to: titleContainerView, corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addShadows(to: itemsContainerView, corners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
@@ -246,11 +246,3 @@ extension DetailViewController: UITableViewDelegate {
         }
     }
 }
-
-//MARK: - UINavigationControllerDelegate
-extension DetailViewController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return AnimationController(animationDuration: 1.0, animationType: .dismiss)
-    }
-}
-
