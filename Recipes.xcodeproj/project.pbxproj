@@ -302,6 +302,7 @@
 				974C38172AE065FC0084F1D1 /* MainTabBarController.swift */,
 				974C38192AE065FC0084F1D1 /* Main.storyboard */,
 				974C38212AE065FF0084F1D1 /* LaunchScreen.storyboard */,
+				97E5D4182B0DFAA4007C8772 /* CommonControllers */,
 				97B914BE2AE176CA0075B828 /* HomeScreen */,
 				97B914C02AE176EF0075B828 /* NewRecipeScreen */,
 				97B914BF2AE176D50075B828 /* FavouritesScreen */,
@@ -314,7 +315,6 @@
 			children = (
 				970F3CDE2AE9026E00997707 /* HomeViewController */,
 				970F3CF92AEAB34900997707 /* FilterViewController */,
-				970F3CDF2AE902A500997707 /* DetailViewController */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -383,6 +383,14 @@
 				97E5D4162B064812007C8772 /* AnimationController.swift */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		97E5D4182B0DFAA4007C8772 /* CommonControllers */ = {
+			isa = PBXGroup;
+			children = (
+				970F3CDF2AE902A500997707 /* DetailViewController */,
+			);
+			path = CommonControllers;
 			sourceTree = "<group>";
 		};
 		97E95DD72AFB88C000AF0E2D /* InstructionTableViewCell */ = {

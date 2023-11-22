@@ -41,14 +41,12 @@ class DetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        self.tabBarController?.tabBar.isHidden = true
         self.instructionsTableView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        self.tabBarController?.tabBar.isHidden = false
         self.instructionsTableView.removeObserver(self, forKeyPath: "contentSize")
     }
     
@@ -65,7 +63,7 @@ class DetailViewController: UIViewController {
     private func setup() {
         self.detailViewModel.delegate = self
         detailViewModel.setupUI()
-  
+       
         setupItemViews()
         addShadows(to: titleContainerView, corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         addShadows(to: itemsContainerView, corners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])

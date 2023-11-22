@@ -12,16 +12,18 @@ class AnimationController: NSObject {
     private let animationDuration: Double
     private let animationType: AnimationType
     private let startingPoint: CGPoint
+    private let selectedCellSize: CGSize
     
     enum AnimationType {
         case present
         case dismiss
     }
     
-    init(animationDuration: Double, animationType: AnimationType, startingPoint: CGPoint) {
+    init(animationDuration: Double, animationType: AnimationType, startingPoint: CGPoint, selectedCellSize: CGSize) {
         self.animationDuration = animationDuration
         self.animationType = animationType
         self.startingPoint = startingPoint
+        self.selectedCellSize = selectedCellSize
     }
 }
 
@@ -50,14 +52,15 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
         
         let viewCenter = presentedView.center
         presentedView.center = startingPoint
-        presentedView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+        presentedView.transform = CGAffineTransform(scaleX: selectedCellSize.width / presentedView.frame.width,
+                                                    y: selectedCellSize.height / presentedView.frame.height)
+        presentedView.alpha = 0
 
         let duration = transitionDuration(using: transitionContext)
         
-        UIView.animate(withDuration: duration,
-                       delay: 0,
-                       options: .curveEaseInOut) {
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseIn) {
             presentedView.center = viewCenter
+            presentedView.alpha = 1
             presentedView.transform = CGAffineTransform.identity
         } completion: { _ in
             transitionContext.completeTransition(true)
@@ -76,11 +79,12 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
 
         let duration = transitionDuration(using: transitionContext)
      
-        UIView.animate(withDuration: duration,
-                       delay: 0,
-                       options: .curveEaseInOut) { [weak self] in
+        UIView.animate(withDuration: duration, delay: 0, options: .curveEaseIn) { [weak self] in
             guard let self = self else { return }
-            dismissedView.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+            dismissedView.center = self.startingPoint
+            dismissedView.alpha = 0.1
+            dismissedView.transform = CGAffineTransform(scaleX: selectedCellSize.width / dismissedView.frame.width,
+                                                        y: selectedCellSize.height / dismissedView.frame.height)
         } completion: { _ in
             transitionContext.completeTransition(true)
         }

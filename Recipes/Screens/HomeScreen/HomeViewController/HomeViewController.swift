@@ -40,7 +40,6 @@ class HomeViewController: UIViewController {
         self.homeViewModel = HomeViewModel()
         self.homeViewModel?.delegate = self
         
-        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem?.tintColor = UIColor(named: "mainColor")
         addFilterButtonToNavigationBar()
@@ -165,9 +164,10 @@ extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         self.homeViewModel?.selectedRecipeCell = collectionView.cellForItem(at: indexPath) as? RecipeCollectionViewCell
-        self.navigationController?.pushViewController(DetailViewController.makeDetailViewController(recipe:
-                                                                                                        homeViewModel?.selectedRecipe(indexPath: indexPath)),
-                                                      animated: true)
+        
+        let detailViewController = DetailViewController.makeDetailViewController(recipe: homeViewModel?.selectedRecipe(indexPath: indexPath))
+        detailViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -241,15 +241,17 @@ extension HomeViewController {
 extension HomeViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if operation == .push {
-            return AnimationController(animationDuration: 0.75,
+            return AnimationController(animationDuration: 0.5,
                                        animationType: .present,
                                        startingPoint: recipesCollectionView.convert(homeViewModel?.selectedRecipeCell?.center ?? CGPoint(),
-                                                                            to: view))
+                                                                                    to: view),
+                                       selectedCellSize: homeViewModel?.selectedRecipeCell?.frame.size ?? CGSize(width: 200, height: 200))
         } else if operation == .pop {
-            return AnimationController(animationDuration: 0.75,
+            return AnimationController(animationDuration: 0.5,
                                        animationType: .dismiss,
                                        startingPoint: recipesCollectionView.convert(homeViewModel?.selectedRecipeCell?.center ?? CGPoint(),
-                                                                            to: view))
+                                                                                    to: view),
+                                       selectedCellSize: homeViewModel?.selectedRecipeCell?.frame.size ?? CGSize(width: 200, height: 200))
         }
         
         return nil

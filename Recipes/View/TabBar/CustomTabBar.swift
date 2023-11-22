@@ -8,53 +8,48 @@
 import UIKit
 
 class CustomTabBar: UITabBar {
-    
-    public var didTapOnButton: (() -> ())?
-    public lazy var middleButton: UIButton = {
-        let middleButton = UIButton()
-        var buttonConfiguration = UIButton.Configuration.plain()
-        
-        middleButton.frame.size = CGSize(width: 50, height: 50)
-        
-        buttonConfiguration.image = UIImage(systemName: "plus")
-        buttonConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-//        buttonConfiguration.cornerStyle =
-        
-        middleButton.backgroundColor = .blue
-        middleButton.tintColor = .white
-        middleButton.layer.cornerRadius = middleButton.frame.width / 2
-        middleButton.configuration = buttonConfiguration
-        
-        middleButton.addTarget(self, action: #selector(middleButtonAction), for: .touchUpInside)
-        
-        self.addSubview(middleButton)
-        
-        return middleButton
-    }()
+
+    var shapeLayer: CALayer?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-//        self.layer.shadowColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1).cgColor
-//        self.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
-//        self.layer.shadowRadius = 4.0
-//        self.layer.shadowOpacity = 0.4
-//        self.layer.masksToBounds = false
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = UIBezierPath(roundedRect: CGRect(x: 30,
+                                                      y: 0,
+                                                      width: self.bounds.width - 60,
+                                                      height: self.bounds.height),
+                                  cornerRadius: (self.frame.width / 2)).cgPath
+
+        shapeLayer.shadowColor = UIColor.black.cgColor
+        shapeLayer.shadowOffset = CGSize(width: 0, height: 2)
+        shapeLayer.shadowRadius = 5.0
+        shapeLayer.shadowOpacity = 0.8
+        shapeLayer.shadowPath = UIBezierPath(roundedRect: CGRect(x: 30,
+                                                                 y: 0,
+                                                                 width: self.bounds.width - 60,
+                                                                 height: self.bounds.height),
+                                             cornerRadius: (self.frame.width / 2)).cgPath
+        shapeLayer.fillColor = UIColor.white.cgColor
+
+        if let oldShapeLayer = self.shapeLayer {
+            layer.replaceSublayer(oldShapeLayer, with: shapeLayer)
+        } else {
+            layer.insertSublayer(shapeLayer, at: 0)
+        }
         
-        middleButton.center = CGPoint(x: frame.width / 2, y: frame.height / 2 - 20)
-    }
-    
-    @objc func middleButtonAction(sender: UIButton) {
-        didTapOnButton?()
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        guard !clipsToBounds && !isHidden && alpha > 0 else { return nil }
+        self.shapeLayer = shapeLayer
         
-        return self.middleButton.frame.contains(point) ? self.middleButton : super.hitTest(point, with: event)
+        if let items = self.items {
+            items.forEach { item in item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                item.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
+            }
+        }
+        self.itemPositioning = .centered
     }
 }
