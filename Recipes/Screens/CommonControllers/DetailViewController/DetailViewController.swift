@@ -10,20 +10,31 @@ import UIKit
 class DetailViewController: UIViewController {
     
     @IBOutlet weak var mainScrollView: UIScrollView!
+    
     @IBOutlet weak var likeItemVIew: ItemView!
     @IBOutlet weak var timeItemView: ItemView!
     @IBOutlet weak var healthItemView: ItemView!
+    
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
     @IBOutlet weak var titleContainerView: UIView!
     @IBOutlet weak var itemsContainerView: UIView!
+    @IBOutlet weak var imageContainerView: UIView!
+    @IBOutlet weak var priceLabelWrapperView: UIView!
+    @IBOutlet weak var summaryContainerView: UIStackView!
+    @IBOutlet weak var collectionContainerView: UIStackView!
+    @IBOutlet weak var tableViewContainerView: UIStackView!
+    
     @IBOutlet weak var ingredientsCollectionView: UICollectionView!
     @IBOutlet weak var instructionsTableView: UITableView!
+    
     @IBOutlet weak var tableViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var imageContainerView: UIView!
     @IBOutlet weak var imageViewContainerHeightConstraint: NSLayoutConstraint!
+    
     var detailViewModel: DetailViewModel!
     
     static func makeDetailViewController(recipe: Recipe?) -> DetailViewController {
@@ -62,27 +73,33 @@ class DetailViewController: UIViewController {
     //MARK: - Custom Setup
     private func setup() {
         self.detailViewModel.delegate = self
-        detailViewModel.setupUI()
-       
-        setupItemViews()
-        addShadows(to: titleContainerView, corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
-        addShadows(to: itemsContainerView, corners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
         
+        detailViewModel.setupUI()
+        setupItemViews()
+        setupShadows()
         addLikeButtonToNavigationBar()
         
         ingredientsCollectionView.register(IngredientCollectionViewCell.nib, forCellWithReuseIdentifier: IngredientCollectionViewCell.identifier)
         configureHierarchy()
         
         instructionsTableView.register(InstructionTableViewCell.nib, forCellReuseIdentifier: InstructionTableViewCell.identifier)
-        
+    }
+    
+    private func setupShadows() {
+        addShadows(to: titleContainerView, corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        addShadows(to: itemsContainerView, corners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
+        addShadows(to: priceLabelWrapperView, corners: [.layerMinXMinYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner])
+        addShadows(to: summaryContainerView, corners: [.layerMinXMinYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner])
+        addShadows(to: collectionContainerView, corners: [.layerMinXMinYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner])
+        addShadows(to: tableViewContainerView, corners: [.layerMinXMinYCorner,.layerMaxXMinYCorner,.layerMinXMaxYCorner,.layerMinXMinYCorner])
     }
         
     private func addShadows(to view: UIView, corners: CACornerMask) {
-        view.layer.cornerRadius = 7
+        view.layer.cornerRadius = 10
         view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 0.6
+        view.layer.shadowOpacity = 0.4
         view.layer.shadowOffset = .zero
-        view.layer.shadowRadius = 4
+        view.layer.shadowRadius = 3
         view.layer.maskedCorners = corners
     }
     
@@ -137,8 +154,8 @@ extension DetailViewController: DetailViewModelDelegate {
         priceLabel.text = text
     }
     
-    func setSummaryText(text: NSAttributedString) {
-        summaryLabel.attributedText = text
+    func setSummaryText(text: String) {
+        summaryLabel.text = text
     }
 
     func setImageContainerViewAlpha(value: CGFloat) {

@@ -27,22 +27,28 @@ extension DetailViewModel {
         }
         
         delegate?.setTitle(text: recipe.title ?? "")
-        delegate?.setPriceLabel(text: "Price: $ \(recipe.pricePerServing ?? 10.0)")
-        delegate?.setSummaryText(text: createAttributedString(string: recipe.summary ?? "") ?? NSAttributedString())
+        delegate?.setPriceLabel(text: "\(recipe.pricePerServing ?? 10.0)")
+        delegate?.setSummaryText(text: createString(string: recipe.summary ?? "") ?? String() )
     }
     
-    private func createAttributedString(string: String) -> NSAttributedString? {
-        do {
-            let modifiedFont = String(format:"<span style=\"font-family: '-apple-system', 'Arial'; font-size: \(15)\">%@</span>", string)
-            let attributedString = try NSAttributedString(data: modifiedFont.data(using: .unicode, allowLossyConversion: true)!,
-                                                          options: [.documentType: NSAttributedString.DocumentType.html,
-                                                             .characterEncoding:String.Encoding.utf8.rawValue],
-                                                   documentAttributes: nil)
-            return attributedString
-        } catch {
-            print("\(error)")
-            return nil
-        }
+    private func createString(string: String) -> String? {
+        let newString = recipe.summary?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
+        return newString
+        
+        //DECODING AS HTML STRING
+//        do {
+//            let modifiedFont = String(format:"<span style=\"font-family: '-apple-system', 'Arial'; font-size: \(15)\">%@</span>", string)
+//            let attributedString = try NSAttributedString(data: modifiedFont.data(using: .unicode, allowLossyConversion: true)!,
+//                                                          options: [.documentType: NSAttributedString.DocumentType.html,
+//                                                                    .characterEncoding:String.Encoding.utf8.rawValue],
+//                                                   documentAttributes: nil)
+//            
+//
+//            return attributedString
+//        } catch {
+//            print("\(error)")
+//            return nil
+//        }
     }
 }
 

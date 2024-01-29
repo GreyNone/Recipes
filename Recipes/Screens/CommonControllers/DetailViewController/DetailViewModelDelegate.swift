@@ -11,7 +11,7 @@ protocol DetailViewModelDelegate: AnyObject {
     func setImage(image: UIImage)
     func setTitle(text: String)
     func setPriceLabel(text: String)
-    func setSummaryText(text: NSAttributedString)
+    func setSummaryText(text: String)
     func setImageContainerViewAlpha(value: CGFloat)
     func setNavigationTitle(text: String?)
 }

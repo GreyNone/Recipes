@@ -11,7 +11,8 @@ import UIKit
 final class HomeViewModel {
     weak var delegate: HomeViewModelDelegate?
 //    var allRecipes = [Recipe]()
-    var allRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe,MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe, MockData.mockRecipe]
+    var allRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe,
+                      MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe, MockData.mockRecipe]
     var filteredRecipes = [Recipe]()
     var lastContentOffset: CGFloat = 0
     var isScrollingToBottom = true
@@ -114,10 +115,8 @@ extension HomeViewModel {
 extension HomeViewModel {
     func calculateScrollDirection(contentOffsetY: CGFloat, contentSizeHeight: CGFloat, scrollViewFrameHeight: CGFloat) {
         if lastContentOffset > contentOffsetY && lastContentOffset < contentSizeHeight - scrollViewFrameHeight {
-            // scroll up
             isScrollingToBottom = false
         } else if lastContentOffset < contentOffsetY && contentOffsetY > 0 {
-            // scroll down
             isScrollingToBottom = true
         }
 

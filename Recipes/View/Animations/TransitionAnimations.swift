@@ -29,7 +29,7 @@ class TransitionAnimations {
     
     static func onDisplayFromLeftTransition() -> CATransition {
         let onDisplayFromLeftTransition = CATransition()
-        onDisplayFromLeftTransition.duration = 0.5
+        onDisplayFromLeftTransition.duration = 0.4
         onDisplayFromLeftTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         onDisplayFromLeftTransition.type = CATransitionType.push
         onDisplayFromLeftTransition.subtype = CATransitionSubtype.fromLeft
@@ -38,7 +38,7 @@ class TransitionAnimations {
     
     static func onDisplayFromRightTransition() -> CATransition {
         let onDisplayFromRightTransition = CATransition()
-        onDisplayFromRightTransition.duration = 0.5
+        onDisplayFromRightTransition.duration = 0.4
         onDisplayFromRightTransition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
         onDisplayFromRightTransition.type = CATransitionType.push
         onDisplayFromRightTransition.subtype = CATransitionSubtype.fromRight
