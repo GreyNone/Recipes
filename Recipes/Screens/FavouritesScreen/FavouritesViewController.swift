@@ -15,19 +15,27 @@ class FavouritesViewController: UIViewController {
     //MARK: - Controller LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationController?.delegate = self
+        self.navigationItem.title = "Your Favourite Recipes"
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        self.navigationItem.title = nil
+        navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     //MARK: - Custom Setup
-    func setup() {
+    private func setup() {
         favouritesViewModel = FavouritesViewModel()
         favouritesViewModel?.delegate = self
                 
@@ -67,6 +75,8 @@ extension FavouritesViewController: UICollectionViewDataSource {
 //MARK: - UICollectionViewDelegate
 extension FavouritesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.favouritesViewModel?.selectedRecipeCell = collectionView.cellForItem(at: indexPath) as? RecipeCollectionViewCell
+        
         self.navigationController?.pushViewController(DetailViewController.makeDetailViewController(recipe: favouritesViewModel?.selectedRecipe(indexPath: indexPath)), animated: true)
     }
 }
@@ -95,5 +105,25 @@ extension FavouritesViewController {
     
     func configureHierarchy() {
         recipesCollectionView.collectionViewLayout = createLayout()
+    }
+}
+
+extension FavouritesViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if operation == .push {
+            return AnimationController(animationDuration: 0.5,
+                                       animationType: .present,
+                                       startingPoint: recipesCollectionView.convert(favouritesViewModel?.selectedRecipeCell?.center ?? CGPoint(),
+                                                                                    to: view),
+                                       selectedCellSize: favouritesViewModel?.selectedRecipeCell?.frame.size ?? CGSize(width: 200, height: 200))
+        } else if operation == .pop {
+            return AnimationController(animationDuration: 0.5,
+                                       animationType: .dismiss,
+                                       startingPoint: recipesCollectionView.convert(favouritesViewModel?.selectedRecipeCell?.center ?? CGPoint(),
+                                                                                    to: view),
+                                       selectedCellSize: favouritesViewModel?.selectedRecipeCell?.frame.size ?? CGSize(width: 200, height: 200))
+        }
+        
+        return nil
     }
 }

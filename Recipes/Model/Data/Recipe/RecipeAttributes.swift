@@ -37,7 +37,7 @@ struct AnalyzedInstruction: Decodable {
     }
 }
 
-struct Step: Decodable {
+struct Step: Decodable, Equatable {
     var number: Int?
     var step: String?
     

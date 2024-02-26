@@ -11,6 +11,7 @@ final class FavouritesViewModel {
     
     weak var delegate: FavouritesViewModelDelegate?
     var favouritesRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe,MockData.mockRecipe,MockData.mockRecipe]
+    var selectedRecipeCell: RecipeCollectionViewCell?
 }
 
 //MARK: - UICollectionViewDataSource

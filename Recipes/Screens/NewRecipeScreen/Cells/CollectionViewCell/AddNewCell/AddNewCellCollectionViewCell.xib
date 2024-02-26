@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddNewCellCollectionViewCell" id="gTV-IL-0wX" customClass="AddNewCellCollectionViewCell" customModule="Recipes" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="259" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="259" height="200"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPb-Qt-dZT">
+                        <rect key="frame" x="0.0" y="0.0" width="259" height="200"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus.app.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="SGj-1t-76B">
+                                <rect key="frame" x="77.666666666666657" y="61.666666666666657" width="103.66666666666666" height="77"/>
+                                <color key="tintColor" name="mainColor"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="SGj-1t-76B" firstAttribute="centerY" secondItem="qPb-Qt-dZT" secondAttribute="centerY" id="1Dn-u9-Bw2"/>
+                            <constraint firstItem="SGj-1t-76B" firstAttribute="width" secondItem="qPb-Qt-dZT" secondAttribute="width" multiplier="0.4" id="p0f-g4-3pT"/>
+                            <constraint firstItem="SGj-1t-76B" firstAttribute="centerX" secondItem="qPb-Qt-dZT" secondAttribute="centerX" id="tuq-bL-a7J"/>
+                            <constraint firstItem="SGj-1t-76B" firstAttribute="height" secondItem="qPb-Qt-dZT" secondAttribute="height" multiplier="0.4" id="zZs-pQ-JqX"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="qPb-Qt-dZT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="22e-CG-DYn"/>
+                <constraint firstItem="qPb-Qt-dZT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="3Wq-gb-Zyq"/>
+                <constraint firstAttribute="trailing" secondItem="qPb-Qt-dZT" secondAttribute="trailing" id="YRo-OE-3jI"/>
+                <constraint firstAttribute="bottom" secondItem="qPb-Qt-dZT" secondAttribute="bottom" id="eRD-Q1-Tpa"/>
+            </constraints>
+            <size key="customSize" width="259" height="200"/>
+            <connections>
+                <outlet property="containerView" destination="qPb-Qt-dZT" id="HWN-sA-ABh"/>
+            </connections>
+            <point key="canvasLocation" x="263.35877862595419" y="72.535211267605632"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="plus.app.fill" catalog="system" width="128" height="114"/>
+        <namedColor name="mainColor">
+            <color red="1" green="0.0" blue="0.37000000476837158" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

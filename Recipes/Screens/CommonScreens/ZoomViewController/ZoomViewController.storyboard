@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Zoom View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="ZoomViewController" id="Y6W-OH-hqX" customClass="ZoomViewController" customModule="Recipes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="afP-Tm-dg3">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fHm-5N-Tza">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="fHm-5N-Tza" firstAttribute="top" secondItem="lpK-fU-xGe" secondAttribute="top" id="27S-F1-67D"/>
+                                    <constraint firstItem="fHm-5N-Tza" firstAttribute="leading" secondItem="lpK-fU-xGe" secondAttribute="leading" id="88q-w0-7Vx"/>
+                                    <constraint firstItem="fHm-5N-Tza" firstAttribute="width" secondItem="mdF-My-PKV" secondAttribute="width" id="n7P-tH-MJg"/>
+                                    <constraint firstItem="fHm-5N-Tza" firstAttribute="bottom" secondItem="lpK-fU-xGe" secondAttribute="bottom" id="nK4-Jh-nkT"/>
+                                    <constraint firstItem="fHm-5N-Tza" firstAttribute="trailing" secondItem="lpK-fU-xGe" secondAttribute="trailing" id="qEm-wq-pYy"/>
+                                    <constraint firstItem="fHm-5N-Tza" firstAttribute="height" secondItem="mdF-My-PKV" secondAttribute="height" id="wFS-k7-QjO"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="lpK-fU-xGe"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="mdF-My-PKV"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="upd-4X-lPp"/>
+                                </connections>
+                            </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Vn-hw-HG3" userLabel="Footer View">
+                                <rect key="frame" x="0.0" y="781.33333333333337" width="393" height="70.666666666666629"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HlT-sa-TKE">
+                                        <rect key="frame" x="10" y="0.0" width="373" height="21.666666666666668"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" name="mainTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.34790746423582369" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="HlT-sa-TKE" secondAttribute="bottom" constant="10" id="WUd-BX-y2b"/>
+                                    <constraint firstAttribute="trailing" secondItem="HlT-sa-TKE" secondAttribute="trailing" constant="10" id="pja-Sm-rut"/>
+                                    <constraint firstItem="HlT-sa-TKE" firstAttribute="top" secondItem="8Vn-hw-HG3" secondAttribute="top" id="q0p-E7-Toh"/>
+                                    <constraint firstItem="HlT-sa-TKE" firstAttribute="leading" secondItem="8Vn-hw-HG3" secondAttribute="leading" constant="10" id="uB8-yJ-GGb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="8Vn-hw-HG3" secondAttribute="bottom" id="8dZ-ck-wub"/>
+                            <constraint firstItem="afP-Tm-dg3" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="BzT-pM-vBO"/>
+                            <constraint firstItem="8Vn-hw-HG3" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="Uob-UY-bKi"/>
+                            <constraint firstItem="8Vn-hw-HG3" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="aeJ-Uv-cFJ"/>
+                            <constraint firstItem="afP-Tm-dg3" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="gsF-bO-MnU"/>
+                            <constraint firstItem="HlT-sa-TKE" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" constant="-15" id="h7p-mP-TUL"/>
+                            <constraint firstItem="afP-Tm-dg3" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="l7B-rK-Hcw"/>
+                            <constraint firstAttribute="bottom" secondItem="afP-Tm-dg3" secondAttribute="bottom" id="mfW-a7-lPO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="footerView" destination="8Vn-hw-HG3" id="mVG-6y-0uc"/>
+                        <outlet property="imageView" destination="fHm-5N-Tza" id="RfN-tN-lcs"/>
+                        <outlet property="titleLabel" destination="HlT-sa-TKE" id="Rbl-Dt-Q5I"/>
+                        <outlet property="zoomScrollView" destination="afP-Tm-dg3" id="9CY-M6-GvA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="119.84732824427481" y="3.5211267605633805"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="mainTextColor">
+            <color red="1" green="0.69419288635253906" blue="0.33255365490913391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

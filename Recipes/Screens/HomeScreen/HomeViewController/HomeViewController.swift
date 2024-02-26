@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
     //MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setup()
     }
     
@@ -40,9 +41,7 @@ class HomeViewController: UIViewController {
         self.homeViewModel = HomeViewModel()
         self.homeViewModel?.delegate = self
         
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        self.navigationItem.backBarButtonItem?.tintColor = UIColor(named: "mainColor")
-        addFilterButtonToNavigationBar()
+        navigationBarSetup()
         
         recipesCollectionView.register(RecipeCollectionViewCell.nib, forCellWithReuseIdentifier: RecipeCollectionViewCell.identifier)
         configureHierarchy()
@@ -50,7 +49,10 @@ class HomeViewController: UIViewController {
         self.homeViewModel?.loadData()
     }
     
-    private func addFilterButtonToNavigationBar() {
+    private func navigationBarSetup() {
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem?.tintColor = UIColor(named: "mainColor")
+        
         let likeBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"),
                                                 style: .plain,
                                                 target: self,
@@ -60,8 +62,7 @@ class HomeViewController: UIViewController {
     }
     
     //MARK: - Actions
-    
-    @objc func didTapOnFilterButton() {
+    @objc private func didTapOnFilterButton() {
         let filterViewStoryboard = UIStoryboard(name: "FilterViewStoryboard", bundle: nil)
         let filterViewController = filterViewStoryboard.instantiateViewController(withIdentifier: "FilterViewController") as! FilterViewController
         filterViewController.delegate = self
@@ -82,8 +83,8 @@ extension HomeViewController: HomeViewModelDelegate {
     }
     
     func insertNewElementInCollectionView(at indexPath: IndexPath) {
-        recipesCollectionView.performBatchUpdates {
-            recipesCollectionView.insertItems(at: [indexPath])
+        recipesCollectionView.performBatchUpdates { [weak self] in
+            self?.recipesCollectionView.insertItems(at: [indexPath])
         }
     }
     
@@ -141,8 +142,7 @@ extension HomeViewController: FilterDataProtocol {
 extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let numberOfItems = homeViewModel?.numberOfItems else { return 0 }
-        return numberOfItems
+        return homeViewModel?.numberOfItems ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -171,7 +171,7 @@ extension HomeViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        homeViewModel?.loadIfNeeded(for: indexPath)
+        homeViewModel?.pagination(for: indexPath)
         
         if let isScrollingToBottom = homeViewModel?.isScrollingToBottom, isScrollingToBottom {
             cell.layer.add(TransitionAnimations.onDisplayFromLeftTransition(), forKey: nil)

@@ -11,10 +11,27 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).adjustsFontSizeToFitWidth = true
+        
+        let customNavigationBarAppeareance = UINavigationBarAppearance()
+        customNavigationBarAppeareance.backgroundColor = UIColor.white
+        customNavigationBarAppeareance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "mainTextColor")!]
+        customNavigationBarAppeareance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(named: "mainTextColor")!]
+        
+        let navigationBarAppeareance = UINavigationBar.appearance()
+        navigationBarAppeareance.scrollEdgeAppearance = customNavigationBarAppeareance
+        navigationBarAppeareance.compactAppearance = customNavigationBarAppeareance
+        navigationBarAppeareance.standardAppearance = customNavigationBarAppeareance
+        
+        let customTabBarAppeareance = UITabBarAppearance()
+        customTabBarAppeareance.backgroundColor = UIColor.white
+        
+        let tabBarAppeareance = UITabBar.appearance()
+        tabBarAppeareance.scrollEdgeAppearance = customTabBarAppeareance
+        tabBarAppeareance.standardAppearance = customTabBarAppeareance
+        
         return true
     }
 

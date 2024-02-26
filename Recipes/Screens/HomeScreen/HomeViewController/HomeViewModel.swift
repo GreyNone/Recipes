@@ -10,9 +10,7 @@ import UIKit
 
 final class HomeViewModel {
     weak var delegate: HomeViewModelDelegate?
-//    var allRecipes = [Recipe]()
-    var allRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe,
-                      MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe, MockData.mockRecipe]
+    var allRecipes = [Recipe]()
     var filteredRecipes = [Recipe]()
     var lastContentOffset: CGFloat = 0
     var isScrollingToBottom = true
@@ -21,10 +19,11 @@ final class HomeViewModel {
 
 //MARK: - Network
 extension HomeViewModel {
-    func loadData() {
+//    func loadData() {
 //        delegate?.startActivityIndicator()
 //        NetworkManager.shared.loadRecipes { [weak self] (recipes) in
 //            guard let self = self else { return }
+//            
 //            if let recipes = recipes {
 //                for var recipe in recipes {
 //                    recipe.appendFilterCases()
@@ -37,14 +36,9 @@ extension HomeViewModel {
 //                delegate?.presentEmptyStatusView()
 //            }
 //        }
-        
-        delegate?.startActivityIndicator()
-        self.filteredRecipes = self.allRecipes
-        delegate?.stopActivityIndicator()
-        delegate?.updateCollectionView()
-    }
+//    }
     
-    func loadIfNeeded(for indexPath: IndexPath) {
+    func pagination(for indexPath: IndexPath) {
 //        let currentItem = indexPath.row
 //        if currentItem >= allRecipes.count - 2 {
 //            NetworkManager.shared.loadRecipes { [weak self] (recipes) in
@@ -62,6 +56,16 @@ extension HomeViewModel {
 //                }
 //            }
 //        }
+    }
+    
+    //Mockdata for test
+    func loadData() {
+        allRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe, MockData.mockRecipe]
+        
+        delegate?.startActivityIndicator()
+        self.filteredRecipes = self.allRecipes
+        delegate?.stopActivityIndicator()
+        delegate?.updateCollectionView()
     }
 }
 
