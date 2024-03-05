@@ -33,7 +33,9 @@ class RecipeCollectionViewCell: UICollectionViewCell {
                 self?.recipeImageView.image = image
             }
         }
+        
         recipeImageView.layer.cornerRadius = 10
+        layer.add(TransitionAnimations.revealTransition(), forKey: nil)
         
         titleLabel.text = data.title
         readyInMinutesLabel.text? = "Ready in: \(data.readyInMinutes ?? 0) minutes"

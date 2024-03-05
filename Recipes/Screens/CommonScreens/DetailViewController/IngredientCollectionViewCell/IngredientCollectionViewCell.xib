@@ -17,48 +17,29 @@
                 <rect key="frame" x="0.0" y="0.0" width="251" height="253"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="G2E-Gr-eRh">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="G2E-Gr-eRh">
                         <rect key="frame" x="0.0" y="0.0" width="251" height="253"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5E1-Cc-Usb">
-                                <rect key="frame" x="0.0" y="0.0" width="251" height="75"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5E1-Cc-Usb">
+                                <rect key="frame" x="0.0" y="0.0" width="251" height="230.33333333333334"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bCK-cc-ren" userLabel="labelWrapper">
-                                <rect key="frame" x="0.0" y="75" width="251" height="128"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v11-cb-EiC">
+                                <rect key="frame" x="0.0" y="230.33333333333334" width="251" height="22.666666666666657"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g3g-Fq-sZQ">
-                                        <rect key="frame" x="5" y="0.0" width="246" height="128"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="125.66666666666667" height="22.666666666666668"/>
                                         <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="19"/>
                                         <color key="textColor" name="mainTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="g3g-Fq-sZQ" secondAttribute="trailing" id="4nY-Pt-m07"/>
-                                    <constraint firstItem="g3g-Fq-sZQ" firstAttribute="leading" secondItem="bCK-cc-ren" secondAttribute="leading" constant="5" id="d1K-xV-Ggh"/>
-                                    <constraint firstAttribute="bottom" secondItem="g3g-Fq-sZQ" secondAttribute="bottom" id="goE-1w-bEN"/>
-                                    <constraint firstItem="g3g-Fq-sZQ" firstAttribute="top" secondItem="bCK-cc-ren" secondAttribute="top" id="ibs-QL-Jfa"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F1A-EP-yNx" userLabel="labelWrapper">
-                                <rect key="frame" x="0.0" y="203" width="251" height="50"/>
-                                <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="250-B4-bdY">
-                                        <rect key="frame" x="0.0" y="0.0" width="246" height="48"/>
+                                        <rect key="frame" x="125.66666666666669" y="0.0" width="125.33333333333331" height="22.666666666666668"/>
                                         <fontDescription key="fontDescription" name="Arial-ItalicMT" family="Arial" pointSize="17"/>
                                         <color key="textColor" name="mainTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="250-B4-bdY" secondAttribute="trailing" constant="5" id="GYx-pG-UFf"/>
-                                    <constraint firstAttribute="bottom" secondItem="250-B4-bdY" secondAttribute="bottom" constant="2" id="dYE-ld-OEz"/>
-                                    <constraint firstItem="250-B4-bdY" firstAttribute="top" secondItem="F1A-EP-yNx" secondAttribute="top" id="dgg-Ot-Bdf"/>
-                                    <constraint firstItem="250-B4-bdY" firstAttribute="leading" secondItem="F1A-EP-yNx" secondAttribute="leading" id="x6E-NH-kAc"/>
-                                </constraints>
-                            </view>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </stackView>
@@ -84,7 +65,7 @@
     </objects>
     <resources>
         <namedColor name="mainTextColor">
-            <color red="0.074017927050590515" green="0.073045298457145691" blue="0.084517285227775574" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.0" blue="0.10000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

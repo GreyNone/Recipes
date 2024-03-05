@@ -135,7 +135,8 @@ extension NewRecipeViewController: TableViewCellDelegate {
         if let zoomViewController = zoomViewControllerStoryboard.instantiateViewController(withIdentifier: "ZoomViewController") as? ZoomViewController {
             zoomViewController.imageToShow = image
             zoomViewController.titleToShow = addTitleTableViewCell.textField.text
-            self.navigationController?.pushViewController(zoomViewController, animated: true)
+//            self.navigationController?.pushViewController(zoomViewController, animated: true)
+            self.present(zoomViewController,animated: true)
         }
     }
     

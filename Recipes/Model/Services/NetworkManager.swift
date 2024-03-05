@@ -29,6 +29,22 @@ final class NetworkManager {
         }
     }
     
+    func loadSearchRecipes(searchQuery: String, completion: @escaping ([Recipe]?) -> Void) {
+        moyaProvider.request(.searchRecipes(searchQuery)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    let fetchedRecipes = try response.map(SearchRecipes.self)
+                    completion(fetchedRecipes.recipes)
+                } catch {
+                    print(error)
+                }
+            case .failure(_):
+                completion(nil)
+            }
+        }
+    }
+    
     func loadImage(imageString: String?, completion: @escaping (UIImage?) -> Void) -> Cancellable? {
         guard let imageString = imageString,
               !imageString.isEmpty else {

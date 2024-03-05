@@ -24,8 +24,8 @@ class IngredientCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         containerStackView.layer.cornerRadius = 10
-        containerStackView.layer.borderWidth = 0.6
-        containerStackView.layer.borderColor = UIColor(named: "mainColor")?.cgColor
+        containerStackView.layer.borderWidth = 0.5
+        containerStackView.layer.borderColor = UIColor.black.cgColor
     }
     
     func configure(data: (title: String?, image: String?, unit: String?, amount: Float?)) {

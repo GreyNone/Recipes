@@ -23,15 +23,31 @@
                                     <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fHm-5N-Tza">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YjD-R7-hlY">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="1VW-s9-LmZ"/>
+                                            <constraint firstAttribute="width" constant="44" id="Olm-lh-BDG"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="xmark.circle" catalog="system">
+                                            <color key="baseForegroundColor" name="mainColor"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="didTapOnCloseButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="AD6-20-HJ1"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="fHm-5N-Tza" firstAttribute="top" secondItem="lpK-fU-xGe" secondAttribute="top" id="27S-F1-67D"/>
                                     <constraint firstItem="fHm-5N-Tza" firstAttribute="leading" secondItem="lpK-fU-xGe" secondAttribute="leading" id="88q-w0-7Vx"/>
+                                    <constraint firstItem="YjD-R7-hlY" firstAttribute="leading" secondItem="mdF-My-PKV" secondAttribute="leading" id="NIr-8S-3em"/>
                                     <constraint firstItem="fHm-5N-Tza" firstAttribute="width" secondItem="mdF-My-PKV" secondAttribute="width" id="n7P-tH-MJg"/>
                                     <constraint firstItem="fHm-5N-Tza" firstAttribute="bottom" secondItem="lpK-fU-xGe" secondAttribute="bottom" id="nK4-Jh-nkT"/>
                                     <constraint firstItem="fHm-5N-Tza" firstAttribute="trailing" secondItem="lpK-fU-xGe" secondAttribute="trailing" id="qEm-wq-pYy"/>
                                     <constraint firstItem="fHm-5N-Tza" firstAttribute="height" secondItem="mdF-My-PKV" secondAttribute="height" id="wFS-k7-QjO"/>
+                                    <constraint firstItem="YjD-R7-hlY" firstAttribute="top" secondItem="mdF-My-PKV" secondAttribute="top" id="xI1-UF-NBS"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="lpK-fU-xGe"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="mdF-My-PKV"/>
@@ -84,8 +100,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="xmark.circle" catalog="system" width="128" height="123"/>
+        <namedColor name="mainColor">
+            <color red="1" green="0.21295362710952759" blue="0.44665622711181641" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="mainTextColor">
-            <color red="1" green="0.69419288635253906" blue="0.33255365490913391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.0" blue="0.10000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

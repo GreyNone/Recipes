@@ -8,7 +8,7 @@
 import Foundation
 
 protocol HomeViewModelDelegate: AnyObject {
-    func updateCollectionView()
+    func reloadCollectionView()
     func insertNewElementInCollectionView(at indexPath: IndexPath)
     func startActivityIndicator()
     func stopActivityIndicator()

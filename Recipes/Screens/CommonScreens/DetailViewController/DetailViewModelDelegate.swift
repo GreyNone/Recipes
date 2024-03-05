@@ -8,6 +8,7 @@
 import UIKit
 
 protocol DetailViewModelDelegate: AnyObject {
+    func reloadIngredientsCollectionView()
     func setImage(image: UIImage)
     func setTitle(text: String)
     func setPriceLabel(text: String)

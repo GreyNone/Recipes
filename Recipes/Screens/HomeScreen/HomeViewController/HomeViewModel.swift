@@ -10,10 +10,10 @@ import UIKit
 
 final class HomeViewModel {
     weak var delegate: HomeViewModelDelegate?
-    var allRecipes = [Recipe]()
+    var mainRecipes = [Recipe]()
+    var searchRecipes = [Recipe]()
     var filteredRecipes = [Recipe]()
     var lastContentOffset: CGFloat = 0
-    var isScrollingToBottom = true
     var selectedRecipeCell: RecipeCollectionViewCell?
 }
 
@@ -27,28 +27,88 @@ extension HomeViewModel {
 //            if let recipes = recipes {
 //                for var recipe in recipes {
 //                    recipe.appendFilterCases()
-//                    self.allRecipes.append(recipe)
+//                    self.mainRecipes.append(recipe)
 //                }
-//                self.filteredRecipes = allRecipes
+//                self.filteredRecipes = mainRecipes
 //                delegate?.stopActivityIndicator()
-//                self.delegate?.updateCollectionView()
+//                delegate?.reloadCollectionView()
 //            } else {
 //                delegate?.presentEmptyStatusView()
 //            }
 //        }
 //    }
     
-    func pagination(for indexPath: IndexPath) {
+    //Mockdata for test
+    func loadData() {
+        mainRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe, MockData.mockRecipe]
+        
+        delegate?.startActivityIndicator()
+        self.filteredRecipes = self.mainRecipes
+        delegate?.stopActivityIndicator()
+        delegate?.reloadCollectionView()
+    }
+    
+    func loadSearchRecipes(with searchQuery: String, isActive: Bool) {
+        if searchQuery.isEmpty && isActive {
+            return
+        } else if searchQuery.isEmpty && !isActive {
+            filteredRecipes = mainRecipes
+            delegate?.reloadCollectionView()
+            return
+        }
+        
+        searchRecipes = []
+        
+        delegate?.startActivityIndicator()
+        NetworkManager.shared.loadSearchRecipes(searchQuery: searchQuery) { [weak self] (recipes) in
+            guard let self = self else { return }
+            
+            if let recipes = recipes {
+                for var recipe in recipes {
+                    recipe.appendFilterCases()
+                    searchRecipes.append(recipe)
+                }
+                filteredRecipes = searchRecipes
+                delegate?.stopActivityIndicator()
+                delegate?.reloadCollectionView()
+            } else {
+                delegate?.presentEmptyStatusView()
+            }
+        }
+    }
+    
+    func pagination(for indexPath: IndexPath, searchQuery: String) {
 //        let currentItem = indexPath.row
-//        if currentItem >= allRecipes.count - 2 {
+//        
+//        guard searchRecipes.isEmpty else {
+//            if currentItem >= searchRecipes.count - 2 {
+//                NetworkManager.shared.loadSearchRecipes(searchQuery: searchQuery) { [weak self]  (recipes) in
+//                    guard let self = self else { return }
+//                    if let recipes = recipes {
+//                        for var recipe in recipes {
+//                            recipe.appendFilterCases()
+//                            
+//                            searchRecipes.append(recipe)
+//                            filteredRecipes.append(recipe)
+//                            
+//                            let indexPath = IndexPath(item: self.filteredRecipes.count - 1, section: 0)
+//                            delegate?.insertNewElementInCollectionView(at: indexPath)
+//                        }
+//                    }
+//                }
+//            }
+//            return
+//        }
+//        
+//        if currentItem >= mainRecipes.count - 2 {
 //            NetworkManager.shared.loadRecipes { [weak self] (recipes) in
 //                guard let self = self else { return }
 //                if let recipes = recipes {
 //                    for var recipe in recipes {
 //                        recipe.appendFilterCases()
 //                        
-//                        self.allRecipes.append(recipe)
-//                        self.filteredRecipes.append(recipe)
+//                        mainRecipes.append(recipe)
+//                        filteredRecipes.append(recipe)
 //                        
 //                        let indexPath = IndexPath(item: self.filteredRecipes.count - 1, section: 0)
 //                        delegate?.insertNewElementInCollectionView(at: indexPath)
@@ -56,16 +116,6 @@ extension HomeViewModel {
 //                }
 //            }
 //        }
-    }
-    
-    //Mockdata for test
-    func loadData() {
-        allRecipes = [MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe,MockData.mockRecipe, MockData.mockRecipe, MockData.mockRecipe]
-        
-        delegate?.startActivityIndicator()
-        self.filteredRecipes = self.allRecipes
-        delegate?.stopActivityIndicator()
-        delegate?.updateCollectionView()
     }
 }
 
@@ -105,25 +155,12 @@ extension HomeViewModel {
         }
         
         if checkedFilters.isEmpty {
-            filteredRecipes = allRecipes
-            delegate?.updateCollectionView()
+            filteredRecipes = mainRecipes
+            delegate?.reloadCollectionView()
             return
         }
         
-        filteredRecipes = allRecipes.filter({ $0.filterCases.contains(checkedFilterCases) })
-        delegate?.updateCollectionView()
-    }
-}
-
-//MARK: - ScrollViewDelegate
-extension HomeViewModel {
-    func calculateScrollDirection(contentOffsetY: CGFloat, contentSizeHeight: CGFloat, scrollViewFrameHeight: CGFloat) {
-        if lastContentOffset > contentOffsetY && lastContentOffset < contentSizeHeight - scrollViewFrameHeight {
-            isScrollingToBottom = false
-        } else if lastContentOffset < contentOffsetY && contentOffsetY > 0 {
-            isScrollingToBottom = true
-        }
-
-        lastContentOffset = contentOffsetY
+        filteredRecipes = mainRecipes.filter({ $0.filterCases.contains(checkedFilterCases) })
+        delegate?.reloadCollectionView()
     }
 }

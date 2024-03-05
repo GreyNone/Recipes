@@ -36,7 +36,7 @@ class ZoomViewController: UIViewController {
     }
     
     private func setup() {
-        zoomScrollView.minimumZoomScale = 1.0;
+        zoomScrollView.minimumZoomScale = 1.0
         zoomScrollView.maximumZoomScale = 3.0
         
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognizerAction)))
@@ -45,20 +45,22 @@ class ZoomViewController: UIViewController {
         titleLabel.text = titleToShow
     }
     
+    //MARK: - Actions
+    @IBAction func didTapOnCloseButton(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
+    
     @objc func tapGestureRecognizerAction(_ sender: UITapGestureRecognizer) {
         updateViews()
     }
     
     private func updateViews() {
-        guard let navigationBar = navigationController?.navigationBar else { return }
-                
         UIView.transition(with: footerView,
                           duration: 0.3,
                           options: .transitionCrossDissolve) { [weak self] in
             guard let self = self else { return }
             
             self.footerView.isHidden = self.isHidden
-            navigationBar.isHidden = self.isHidden
         } completion: { [weak self] success in
             guard let self = self else { return }
             

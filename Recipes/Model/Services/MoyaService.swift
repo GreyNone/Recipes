@@ -10,6 +10,7 @@ import Moya
 
 enum MoyaService {
     case recipes
+    case searchRecipes(String)
     case image(String)
     case ingredientImage(String)
 }
@@ -17,7 +18,7 @@ enum MoyaService {
 extension MoyaService: TargetType {
     var baseURL: URL {
         switch self {
-        case .recipes:
+        case .recipes,.searchRecipes(_):
             return URL(string: "https://api.spoonacular.com")!
         case .image(let image):
             return URL(string: image)!
@@ -29,6 +30,8 @@ extension MoyaService: TargetType {
         switch self {
         case .recipes:
             return "/recipes/random"
+        case .searchRecipes(_):
+            return "/recipes/complexSearch"
         case .image(_):
             return ""
         case .ingredientImage(let image):
@@ -40,7 +43,7 @@ extension MoyaService: TargetType {
     }
     var method: Moya.Method {
         switch self {
-        case .recipes, .image(_), .ingredientImage(_):
+        case .recipes,.searchRecipes(_), .image(_), .ingredientImage(_):
             return .get
         }
     }
@@ -48,6 +51,12 @@ extension MoyaService: TargetType {
         switch self {
         case .recipes:
             return .requestParameters(parameters: ["number" : "10"], encoding: URLEncoding.default)
+        case .searchRecipes(let searchQuery):
+            return .requestParameters(parameters: [ "query" : searchQuery,
+                                                    "number" : "10",
+                                                    "addRecipeInformation" : "true",
+                                                    "fillIngredients" : "true"],
+                                      encoding: URLEncoding.default)
         case .image(_), .ingredientImage(_):
             return .requestPlain
         }

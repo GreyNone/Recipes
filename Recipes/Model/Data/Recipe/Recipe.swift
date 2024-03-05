@@ -15,6 +15,14 @@ struct Recipes: Decodable {
     }
 }
 
+struct SearchRecipes: Decodable {
+    var recipes: [Recipe]?
+    
+    enum CodingKeys: String, CodingKey {
+        case recipes = "results"
+    }
+}
+
 struct Recipe: Decodable {
     var vegetarian: Bool?
     var vegan: Bool?

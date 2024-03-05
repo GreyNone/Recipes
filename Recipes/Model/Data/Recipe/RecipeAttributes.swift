@@ -7,6 +7,14 @@
 
 import UIKit
 
+struct Ingredients: Decodable {
+    var ingredients: [Ingredient]?
+    
+    enum Codingkeys: String, CodingKey {
+        case ingredients
+    }
+}
+
 struct Ingredient: Decodable {
     var id: Int?
     var name: String?

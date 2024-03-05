@@ -58,7 +58,7 @@ class DetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
+        
         self.instructionsTableView.removeObserver(self, forKeyPath: "contentSize")
     }
     
@@ -102,11 +102,12 @@ class DetailViewController: UIViewController {
     }
         
     private func addShadows(to view: UIView, corners: CACornerMask) {
-        view.layer.cornerRadius = 3
+        view.layer.cornerRadius = 10
+        view.layer.borderWidth = 0.5
         
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: 3, height: 3)
+        view.layer.shadowOffset = CGSize(width: 2, height: 2)
         view.layer.shadowRadius = 2
         view.layer.maskedCorners = corners
     }
@@ -129,7 +130,8 @@ class DetailViewController: UIViewController {
         if let zoomViewController = zoomViewControllerStoryboard.instantiateViewController(withIdentifier: "ZoomViewController") as? ZoomViewController {
             zoomViewController.imageToShow = recipeImageView.image
             zoomViewController.titleToShow = detailViewModel?.recipe.title
-            self.navigationController?.pushViewController(zoomViewController, animated: true)
+//            self.navigationController?.pushViewController(zoomViewController, animated: true)
+            self.present(zoomViewController, animated: true)
         }
     }
     
@@ -149,6 +151,9 @@ class DetailViewController: UIViewController {
 
 //MARK: - DetailViewModelDelegate
 extension DetailViewController: DetailViewModelDelegate {
+    func reloadIngredientsCollectionView() {
+        ingredientsCollectionView?.reloadData()
+    }
     
     func setImage(image: UIImage) {
         recipeImageView.image = image
@@ -206,7 +211,7 @@ extension DetailViewController {
                                                                                  heightDimension: .fractionalHeight(1.0)))
             item.contentInsets = contentInsets
             
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.3),
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.4),
                                                                                                     heightDimension: .fractionalHeight(1.0)),
                                                                  subitems: [item])
             

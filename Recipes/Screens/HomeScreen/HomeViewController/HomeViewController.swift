@@ -12,6 +12,10 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var recipesCollectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private var emptyStatusView: EmptyStatusView?
+    private var searchController = UISearchController(searchResultsController: nil)
+    private var isActive: Bool {
+        return searchController.isActive
+    }
     var homeViewModel: HomeViewModel?
     
     //MARK: - Controller lifecycle
@@ -24,7 +28,6 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.delegate = self
         self.navigationItem.title = "Food Recipes For You"
         navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -40,6 +43,7 @@ class HomeViewController: UIViewController {
     private func setup() {
         self.homeViewModel = HomeViewModel()
         self.homeViewModel?.delegate = self
+        self.navigationController?.delegate = self
         
         navigationBarSetup()
         
@@ -52,6 +56,13 @@ class HomeViewController: UIViewController {
     private func navigationBarSetup() {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem?.tintColor = UIColor(named: "mainColor")
+        
+        searchController.delegate = self
+//        searchController.searchBar.delegate = self
+        searchController.searchResultsUpdater = self
+//        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.searchBar.placeholder = "Search For Recipes"
+        self.navigationItem.searchController = searchController
         
         let likeBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"),
                                                 style: .plain,
@@ -78,7 +89,7 @@ class HomeViewController: UIViewController {
 //MARK: - HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
     
-    func updateCollectionView() {
+    func reloadCollectionView() {
         recipesCollectionView.reloadData()
     }
     
@@ -107,7 +118,7 @@ extension HomeViewController: HomeViewModelDelegate {
     
     func dismissEmptyStatusView() {
         emptyStatusView?.removeFromSuperview()
-        emptyStatusView = nil
+//        emptyStatusView = nil
     }
 }
 
@@ -171,23 +182,14 @@ extension HomeViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        homeViewModel?.pagination(for: indexPath)
-        
-        if let isScrollingToBottom = homeViewModel?.isScrollingToBottom, isScrollingToBottom {
-            cell.layer.add(TransitionAnimations.onDisplayFromLeftTransition(), forKey: nil)
-        } else {
-            cell.layer.add(TransitionAnimations.onDisplayFromRightTransition(), forKey: nil)
-        }
+        guard let searchQuery = searchController.searchBar.text else { return }
+        homeViewModel?.pagination(for: indexPath, searchQuery: searchQuery )
     }
 }
 
 //MARK: - UIScrollViewDelegate
 extension HomeViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        homeViewModel?.calculateScrollDirection(contentOffsetY: scrollView.contentOffset.y,
-                                                contentSizeHeight: scrollView.contentSize.height,
-                                                scrollViewFrameHeight: scrollView.frame.height)
-    }
+
 }
 
 //MARK: - UICollectionViewCompositionalLayout
@@ -196,29 +198,23 @@ extension HomeViewController {
         let layout = UICollectionViewCompositionalLayout {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
-            let trailingGroupCount = 1
             let interGroupSpacing = 5.0
-            let contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+            let contentInsets = NSDirectionalEdgeInsets(top: 2.5, leading: 2.5, bottom: 2.5, trailing: 2.5)
             
             let leadingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
                                                                                         heightDimension: .fractionalHeight(1.0)))
             leadingItem.contentInsets = contentInsets
             
-            let trailingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0 / CGFloat(trailingGroupCount)),
-                                                                                         heightDimension: .fractionalHeight(1.0 / CGFloat(trailingGroupCount))))
+            let trailingItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
+                                                                                         heightDimension: .fractionalHeight(1.0)))
             trailingItem.contentInsets = contentInsets
-            
-            let trailingGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
-                                                                                                    heightDimension: .fractionalHeight(1.0)),
-                                                                 repeatingSubitem: trailingItem,
-                                                                 count: trailingGroupCount)
-            
+
             let topNestedGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                                                       heightDimension: .fractionalHeight(0.6)),
-                                                                    subitems: [leadingItem, trailingGroup])
+                                                                                                       heightDimension: .fractionalHeight(0.5)),
+                                                                    subitems: [leadingItem, trailingItem])
             
             let bottomItem = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                                                       heightDimension: .fractionalHeight(0.4)))
+                                                                                       heightDimension: .fractionalHeight(0.5)))
             bottomItem.contentInsets = contentInsets
 
             let nestedGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
@@ -239,7 +235,9 @@ extension HomeViewController {
 
 //MARK: - UINavigationControllerDelegate
 extension HomeViewController: UINavigationControllerDelegate {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation,
+                              from fromVC: UIViewController,
+                              to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if operation == .push {
             return AnimationController(animationDuration: 0.5,
                                        animationType: .present,
@@ -256,5 +254,18 @@ extension HomeViewController: UINavigationControllerDelegate {
         
         return nil
     }
+}
+
+//MARK: - UISearchResultsUpdating
+extension HomeViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let searchQuery = searchController.searchBar.text else { return }
+        
+        homeViewModel?.loadSearchRecipes(with: searchQuery, isActive: isActive)
+    }
+}
+
+extension HomeViewController: UISearchControllerDelegate {
+    
 }
 
